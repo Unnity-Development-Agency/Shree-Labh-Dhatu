@@ -236,7 +236,7 @@ export default function MaterialsShowcase() {
             maskImage: "linear-gradient(to bottom, black, transparent 75%)",
           }}
         />
-        <div className="absolute -right-20 top-20 h-72 w-72 rounded-full bg-[#E53935]/[0.07] blur-3xl" />
+        <div className="absolute -right-20 top-20 h-72 w-72 rounded-full bg-[#E53936]/[0.07] blur-3xl" />
         <div className="absolute -bottom-28 -left-20 h-80 w-80 rounded-full bg-orange-300/15 blur-3xl" />
       </div>
       <div className="mx-auto w-full max-w-7xl">
