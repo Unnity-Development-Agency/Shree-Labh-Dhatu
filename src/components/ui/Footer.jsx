@@ -32,7 +32,7 @@ const trustBadges = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#14161c] text-gray-300">
+    <footer className="metal-footer bg-[var(--dark)] text-gray-300">
       {/* Top trust bar */}
       <div className="border-b border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-4">
@@ -49,7 +49,7 @@ export default function Footer() {
 
       {/* Main footer content */}
       <div className="mx-auto max-w-7xl px-6 py-14">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4">
           {/* Company info */}
           <div>
             <h3 className="text-xl font-bold text-white">
@@ -77,7 +77,7 @@ export default function Footer() {
                 <FaInstagram size={16} />
               </a>
               <a
-                href="#"
+                href="https://wa.me/919810296868"
                 aria-label="WhatsApp"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-500/60 text-xs font-semibold text-gray-300 transition-colors hover:border-red-500 hover:text-red-500"
               >
@@ -139,18 +139,20 @@ export default function Footer() {
                   className="mt-0.5 shrink-0 text-gray-500"
                 />
                 <span>
-                  Plot No. XX, Industrial Area,
+                  Branch 1
                   <br />
-                  Your City, State – 000000, India
+                  3777 main road pahari dhiraj , sadar bazar Delhi 110006
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <FaPhoneAlt size={16} className="shrink-0 text-gray-500" />
-                <span>+91 98XXX XXXXX</span>
+                <a href="tel:+91 9810296868">+91 9810296868</a>
               </li>
               <li className="flex items-center gap-3">
                 <FaEnvelope size={16} className="shrink-0 text-gray-500" />
-                <span>info@shreelabhdhatu.com</span>
+                <a href="mailto:shreelabh3777@gmail.com">
+                  shreelabh3777@gmail.com
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <FaClock size={16} className="shrink-0 text-gray-500" />

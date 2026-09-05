@@ -6,6 +6,7 @@ import copperProducts from "@/data/copperProducts";
 import CopperVariantSection from "@/components/CopperVariantSection";
 import Footer from "@/components/ui/Footer";
 import MetalHeroCanvas from "@/components/MetalHeroCanvas";
+import heroStyles from "@/components/home/Hero.module.css";
 
 const materialCopy = {
   Copper:
@@ -54,9 +55,9 @@ export default function CopperProductsPage({
 
   return (
     <>
-      <main className="bg-[#f8f7f4]">
+      <main className="bg-[var(--page-bg)]">
         <section
-          className="relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden bg-[#121316] px-5 py-14 text-white sm:px-8 lg:px-12"
+          className="relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden bg-[var(--dark)] px-5 py-14 text-white sm:px-8 lg:px-12"
           onMouseMove={(event) => {
             const bounds = event.currentTarget.getBoundingClientRect();
             setPointer({
@@ -65,14 +66,16 @@ export default function CopperProductsPage({
             });
           }}
         >
+          <div className={heroStyles.backdrop} aria-hidden="true" />
+          <div className={heroStyles.shade} aria-hidden="true" />
           <div
             className="pointer-events-none absolute inset-0 opacity-80 transition-[background] duration-300"
             style={{
-              background: `radial-gradient(550px circle at ${pointer.x}% ${pointer.y}%, rgba(229,57,53,0.24), transparent 55%)`,
+              background: `radial-gradient(550px circle at ${pointer.x}% ${pointer.y}%, rgba(229,57,53,0.16), transparent 55%)`,
             }}
           />
           <div className="pointer-events-none absolute -right-24 -top-28 h-96 w-96 rounded-full border border-white/10" />
-          <div className="pointer-events-none absolute -bottom-40 left-[12%] h-80 w-80 rounded-full bg-[#E53935]/15 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-40 left-[12%] h-80 w-80 rounded-full bg-[#e53935]/10 blur-3xl" />
 
           <div className="relative mx-auto max-w-7xl">
             <div className="flex flex-wrap items-center gap-3 text-[11px] font-bold uppercase tracking-[0.24em] text-white/55">
@@ -81,7 +84,7 @@ export default function CopperProductsPage({
             </div>
             <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#ff6a65]">
+                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#c4d0ca]">
                   Premium metal supply
                 </p>
                 <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.045em] sm:text-6xl lg:text-7xl">
@@ -106,7 +109,7 @@ export default function CopperProductsPage({
         </section>
 
         <nav
-          className="sticky top-0 z-30 border-b border-zinc-200/80 bg-[#f8f7f4]/90 px-4 py-3 backdrop-blur-xl sm:px-8 lg:px-12"
+          className="sticky top-0 z-30 border-b border-zinc-200/80 bg-[var(--page-bg)]/90 px-4 py-3 backdrop-blur-xl sm:px-8 lg:px-12"
           aria-label={`${materialName} products`}
         >
           <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pt-12 pb-1 scrollbar-none">
@@ -117,14 +120,14 @@ export default function CopperProductsPage({
                   key={product.id}
                   type="button"
                   onClick={() => scrollToProduct(product.id)}
-                  className={`group flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all duration-300 ${
+                  className={`group flex min-h-12 shrink-0 items-center gap-2 rounded-[2px] border px-4 py-3 text-sm font-medium transition-all duration-300 ${
                     isActive
                       ? "border-zinc-900 bg-zinc-900 text-white shadow-lg shadow-zinc-900/15"
                       : "border-zinc-200 bg-white text-zinc-500 hover:border-[#E53935]/40 hover:text-zinc-900"
                   }`}
                 >
                   <span
-                    className={`text-[10px] ${isActive ? "text-[#ff6a65]" : "text-[#E53935]"}`}
+                    className={`text-[10px] ${isActive ? "text-[#c4d0ca]" : "text-[#E53935]"}`}
                   >
                     {String(index + 1).padStart(2, "0")}
                   </span>

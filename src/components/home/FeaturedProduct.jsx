@@ -55,7 +55,7 @@ export default function FeaturedProduct() {
 
   return (
     <section
-      className="relative isolate w-full overflow-hidden bg-zinc-800 px-2 py-14 text-zinc-100 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
+      className="relative isolate w-full overflow-hidden bg-[var(--dark-surface)] px-2 py-14 text-zinc-100 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
       aria-labelledby="featured-product-heading"
     >
       {/*
@@ -124,7 +124,7 @@ export default function FeaturedProduct() {
             maskImage: "linear-gradient(to bottom, black, transparent 88%)",
           }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(229,57,53,0.2),transparent_30%),radial-gradient(circle_at_10%_82%,rgba(180,83,9,0.16),transparent_26%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(245,61,20,0.2),transparent_30%),radial-gradient(circle_at_10%_82%,rgba(245,61,20,0.16),transparent_26%)]" />
         <svg
           className="absolute -right-10 -top-10 hidden h-64 w-96 opacity-[0.18] sm:block"
           viewBox="0 0 400 260"
@@ -137,27 +137,27 @@ export default function FeaturedProduct() {
               y1="0"
               x2={-40 + i * 40}
               y2="260"
-              stroke="#E53935"
+              stroke="var(--brand)"
               strokeWidth="1"
             />
           ))}
         </svg>
 
         <div className="absolute -bottom-16 -left-16 h-72 w-72 opacity-[0.22] sm:h-96 sm:w-96">
-          <div className="absolute inset-0 rotate-12 rounded-[3rem] bg-gradient-to-br from-[#E53935] to-transparent blur-2xl" />
-          <div className="absolute inset-8 -rotate-6 rounded-[3rem] bg-gradient-to-tr from-[#E53935] to-transparent blur-2xl" />
+          <div className="absolute inset-0 rotate-12 rounded-[3rem] bg-gradient-to-br from-[var(--brand)] to-transparent blur-2xl" />
+          <div className="absolute inset-8 -rotate-6 rounded-[3rem] bg-gradient-to-tr from-[var(--brand)] to-transparent blur-2xl" />
         </div>
 
         <div
           className="absolute bottom-10 left-1/3 h-40 w-56 opacity-[0.14]"
           style={{
-            backgroundImage: "radial-gradient(#fb923c 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(var(--brand) 1px, transparent 1px)",
             backgroundSize: "14px 14px",
           }}
         />
 
         <div
-          className={`absolute right-[6%] top-[12%] h-56 w-56 rounded-full bg-[#E53935]/[0.14] blur-3xl sm:h-80 sm:w-80 lg:h-96 lg:w-96 ${
+          className={`absolute right-[6%] top-[12%] h-56 w-56 rounded-full bg-[var(--brand)]/[0.14] blur-3xl sm:h-80 sm:w-80 lg:h-96 lg:w-96 ${
             reduceMotion
               ? ""
               : "motion-safe:[animation:fp-drift_10s_ease-in-out_infinite]"
@@ -165,7 +165,7 @@ export default function FeaturedProduct() {
         />
       </div>
 
-      <div className="relative mx-auto w-full max-w-7xl rounded-sm border border-white/10 bg-zinc-950/35 p-5 shadow-2xl shadow-black/30 backdrop-blur-sm sm:p-8 lg:p-10">
+      <div className="relative mx-auto w-full max-w-7xl rounded-sm border border-white/10 bg-[var(--dark)]/35 p-5 shadow-2xl shadow-black/30 backdrop-blur-sm sm:p-8 lg:p-10">
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-px overflow-hidden rounded-full"
           aria-hidden="true"
@@ -174,7 +174,7 @@ export default function FeaturedProduct() {
             className={
               reduceMotion
                 ? "hidden"
-                : "h-full w-1/3 bg-gradient-to-r from-transparent via-orange-200/80 to-transparent motion-safe:[animation:fp-shimmer_5s_ease-in-out_infinite]"
+                : "h-full w-1/3 bg-gradient-to-r from-transparent via-[#f2c1af]/80 to-transparent motion-safe:[animation:fp-shimmer_5s_ease-in-out_infinite]"
             }
           />
         </div>
@@ -191,10 +191,10 @@ export default function FeaturedProduct() {
             style={{ gridArea: "eyebrow" }}
             className="flex items-center gap-3"
           >
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#E53935]">
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#c6cfca]">
               Featured Product
             </span>
-            <span className="hidden h-px flex-1 max-w-24 bg-[#E53935]/30 sm:block" />
+            <span className="hidden h-px flex-1 max-w-24 bg-[var(--brand)]/30 sm:block" />
             <motion.span
               animate={reduceMotion ? undefined : { rotate: [0, 15, -15, 0] }}
               transition={
@@ -210,7 +210,7 @@ export default function FeaturedProduct() {
               className="hidden sm:block"
             >
               <Sparkle
-                className="h-3.5 w-3.5 shrink-0 text-[#E53935]"
+                className="h-3.5 w-3.5 shrink-0 text-[#c6cfca]"
                 aria-hidden="true"
               />
             </motion.span>
@@ -225,14 +225,14 @@ export default function FeaturedProduct() {
               id="featured-product-heading"
               className="text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl lg:text-5xl"
             >
-              Premium <span className="text-[#E53935]">Copper Plates</span>
+              Premium <span className="text-[#c6cfca]">Copper Plates</span>
             </h2>
             <motion.span
               initial={reduceMotion ? false : { width: 0 }}
               whileInView={reduceMotion ? undefined : { width: "2.5rem" }}
               viewport={{ once: false, amount: 0.6 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.2 }}
-              className="mt-3 block h-1 rounded-full bg-[#E53935]"
+              className="mt-3 block h-1 rounded-full bg-[var(--brand)]"
             />
           </motion.header>
 
@@ -268,7 +268,7 @@ export default function FeaturedProduct() {
                 cx="100"
                 cy="100"
                 r="98"
-                stroke="#E53935"
+                stroke="var(--brand)"
                 strokeWidth="1"
                 strokeDasharray="2 6"
               />
@@ -308,13 +308,13 @@ export default function FeaturedProduct() {
               }
               viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.3 }}
-              className="absolute left-2 top-2 z-20 flex h-16 w-16 flex-col items-center justify-center rounded-full bg-[#E53935] p-2 text-center shadow-md shadow-[#E53935]/30 sm:left-22 sm:top-3 sm:h-20 sm:w-20"
+              className="absolute left-2 top-2 z-20 flex h-16 w-16 flex-col items-center justify-center rounded-full bg-[#e3e7df] p-2 text-center shadow-md shadow-[var(--brand)]/30 sm:left-22 sm:top-3 sm:h-20 sm:w-20"
             >
               <Sparkle
-                className="mb-0.5 h-3 w-3 text-white/90"
+                className="mb-0.5 h-3 w-3 text-[var(--ink)]"
                 aria-hidden="true"
               />
-              <span className="text-[7px] font-bold uppercase leading-tight tracking-wide text-white sm:text-[8px]">
+              <span className="text-[9px] font-bold uppercase leading-tight tracking-wide text-[var(--ink)] sm:text-[10px]">
                 Exceptional Quality
               </span>
             </motion.div>
@@ -333,8 +333,8 @@ export default function FeaturedProduct() {
                 whileHover={reduceMotion ? undefined : { x: 2 }}
                 className="flex items-center gap-2.5"
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E53935]/10 transition-colors duration-300">
-                  <Icon className="h-4 w-4 text-[#E53935]" aria-hidden="true" />
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand)]/10 transition-colors duration-300">
+                  <Icon className="h-4 w-4 text-[#c6cfca]" aria-hidden="true" />
                 </span>
                 <span className="text-xs font-medium leading-tight text-zinc-100 sm:text-sm">
                   {title} {subtitle}
@@ -348,40 +348,40 @@ export default function FeaturedProduct() {
             variants={reduceMotion ? undefined : fadeUpVariants}
             style={{ gridArea: "cta" }}
           >
-            <motion.button
-              type="button"
+            <motion.a
+              href="/copper#copper-sheet"
               aria-label="View copper plates product details"
               whileHover={reduceMotion ? undefined : { scale: 1.03 }}
               whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-              className="group inline-flex min-h-11 items-center gap-2.5 rounded-full border border-[#E53935]/60 bg-[#E53935] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg shadow-[#E53935]/20 transition-colors duration-300 hover:bg-[#c92e2a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E53935]"
+              className="site-button site-button--light"
             >
               View Product
               <ArrowRight
-                className="h-3.5 w-3.5 text-[#E53935] transition-transform duration-300 group-hover:translate-x-1"
+                className="h-3.5 w-3.5 text-[var(--ink)] transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden="true"
               />
-            </motion.button>
+            </motion.a>
           </motion.div>
 
           {/* ---------- Specifications ---------- */}
           <motion.div
             variants={reduceMotion ? undefined : fadeUpVariants}
             style={{ gridArea: "specs" }}
-            className="mt-3 overflow-hidden rounded-sm border border-white/10 bg-white/5"
+            className="mt-3 overflow-hidden rounded-sm border border-white/10 bg-[var(--surface)]/5"
           >
             <motion.ul
               variants={reduceMotion ? undefined : containerVariants}
-              className="grid grid-cols-2 gap-px bg-white/10 lg:grid-cols-4"
+              className="grid grid-cols-2 gap-px bg-[var(--surface)]/10 lg:grid-cols-4"
             >
               {specifications.map(({ icon: Icon, label, value }) => (
                 <motion.li
                   key={label}
                   variants={reduceMotion ? undefined : fadeUpVariants}
-                  className="group flex flex-col items-center gap-1.5 bg-zinc-900/90 px-3 py-5 text-center transition-colors duration-300 hover:bg-zinc-800 sm:py-6"
+                  className="group flex flex-col items-center gap-1.5 bg-[var(--dark)]/90 px-3 py-5 text-center transition-colors duration-300 hover:bg-[var(--dark-surface)] sm:py-6"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E53935]/10 transition-transform duration-300 group-hover:scale-110">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--brand)]/10 transition-transform duration-300 group-hover:scale-110">
                     <Icon
-                      className="h-4.5 w-4.5 text-[#E53935]"
+                      className="h-4.5 w-4.5 text-[#c6cfca]"
                       aria-hidden="true"
                     />
                   </span>
@@ -402,13 +402,13 @@ export default function FeaturedProduct() {
             style={{ gridArea: "tagline" }}
             className="mt-6 flex items-center justify-center gap-4 sm:mt-8"
           >
-            <Sparkle className="hidden h-3.5 w-3.5 shrink-0 text-[#E53935] sm:block" aria-hidden="true" />
-            <span className="h-px flex-1 max-w-[8rem] bg-[#E53935]/30" />
-            <p className="shrink-0 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-500 sm:text-xs">
+            <Sparkle className="hidden h-3.5 w-3.5 shrink-0 text-[#c6cfca] sm:block" aria-hidden="true" />
+            <span className="h-px flex-1 max-w-[8rem] bg-[var(--brand)]/30" />
+            <p className="shrink-0 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--muted)] sm:text-xs">
               Built for Industry. Made to Last.
             </p>
-            <span className="h-px flex-1 max-w-[8rem] bg-[#E53935]/30" />
-            <Sparkle className="hidden h-3.5 w-3.5 shrink-0 text-[#E53935] sm:block" aria-hidden="true" />
+            <span className="h-px flex-1 max-w-[8rem] bg-[var(--brand)]/30" />
+            <Sparkle className="hidden h-3.5 w-3.5 shrink-0 text-[#c6cfca] sm:block" aria-hidden="true" />
           </motion.div> */}
         </motion.div>
       </div>

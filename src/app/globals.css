@@ -3,6 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand: #e53935;
+  --brand-deep: #ba2e2b;
+  --brand-ink: #b82d2a;
+  --brand-light: #f2908b;
+  --on-brand: #171a1b;
+  --page-bg: #f3f2ee;
+  --surface: #faf9f6;
+  --surface-muted: #eae8e1;
+  --line: #d9d8d1;
+  --ink: #272c2d;
+  --muted: #626969;
+  --dark: #191f22;
+  --dark-surface: #263035;
 }
 
 @theme inline {
@@ -20,9 +33,143 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+/* One action-button system for the hero, navigation, catalogue and enquiry. */
+.site-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 48px;
+  max-width: 100%;
+  padding: 12px 18px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+/* Match the desktop navigation breakpoint; outrank the shared button display. */
+@media (min-width: 1024px) {
+  .site-button.header-mobile-toggle {
+    display: none;
+  }
+}
+
+.site-button:hover {
+  transform: translateY(-2px);
+}
+.site-button--light {
+  background: #fffef7;
+  color: var(--ink);
+}
+.site-button--outline {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink);
+}
+.site-button--outline:hover {
+  border-color: #969e9e;
+}
+.site-button--on-dark {
+  background: transparent;
+  border-color: #ffffff35;
+  color: #e2e6df;
+}
+.site-icon-button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  justify-content: center;
+  gap: 0;
+}
+.site-button svg {
+  flex-shrink: 0;
+}
+.site-button:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 4px;
+}
+.site-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-button {
+    transition: none;
+  }
+  .site-button:hover {
+    transform: none;
+  }
+}
+
+/* Small ink droplets expand and merge inside the control, behind its content. */
+@property --splash-radius {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@layer base {
+  :where(button, .site-button, .button-splash) {
+    position: relative;
+  }
+}
+
+:is(button, .site-button, .button-splash) {
+  isolation: isolate;
+}
+
+:is(button, .site-button, .button-splash)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse var(--splash-radius) calc(var(--splash-radius) * 1.8) at 18% 68%, var(--brand) 98%, transparent 100%),
+    radial-gradient(ellipse calc(var(--splash-radius) * .75) var(--splash-radius) at 53% 24%, var(--brand) 98%, transparent 100%),
+    radial-gradient(ellipse calc(var(--splash-radius) * .6) calc(var(--splash-radius) * 1.3) at 83% 72%, var(--brand) 98%, transparent 100%),
+    radial-gradient(ellipse calc(var(--splash-radius) * .35) calc(var(--splash-radius) * .8) at 36% 88%, var(--brand) 98%, transparent 100%);
+  transition: --splash-radius 650ms cubic-bezier(.22, .65, .3, 1);
+}
+
+@media (hover: hover) {
+  :is(button, .site-button, .button-splash):not(:disabled):not([aria-disabled="true"]):hover::before {
+    --splash-radius: 150%;
+  }
+  :is(button, .site-button, .button-splash):not(:disabled):not([aria-disabled="true"]):hover {
+    color: var(--on-brand) !important;
+  }
+  :is(button, .site-button, .button-splash):not(:disabled):hover :is(span, svg) {
+    color: inherit;
+  }
+}
+
+:is(button, .site-button, .button-splash):not(:disabled):focus-visible::before {
+  --splash-radius: 150%;
+}
+:is(button, .site-button, .button-splash):not(:disabled):focus-visible {
+  color: var(--on-brand) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(button, .site-button, .button-splash)::before { transition: none; }
 }
 
 button:not(:disabled),
@@ -32,4 +179,59 @@ summary,
 select,
 label[for] {
   cursor: pointer;
+}
+
+.home-page {
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+.home-page ::selection {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+.metal-footer .bg-red-500 {
+  background-color: var(--brand);
+}
+.metal-footer a:hover {
+  color: #e1e5dc;
+  border-color: #bdc4bd;
+}
+.metal-footer .text-gray-400 {
+  color: #b9c1bf;
+}
+.metal-footer .text-gray-500 {
+  color: #a0aba9;
+}
+.metal-footer {
+  overflow-wrap: anywhere;
+}
+.metal-footer li > span {
+  min-width: 0;
+}
+.home-page #materials {
+  scroll-margin-top: 24px;
+}
+
+.home-page :where(h1, h2, h3, p, a, button) {
+  overflow-wrap: break-word;
+}
+.home-page :where(button, a):focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 4px;
+}
+@media (max-width: 639px) {
+  .home-page > section:not(#hero):not(#materials) {
+    padding: 48px 20px;
+  }
+  .home-page > section:not(#hero) h2 {
+    font-size: clamp(1.65rem, 7vw, 2rem);
+  }
+  .home-page > section:not(#hero) p {
+    line-height: 1.7;
+  }
+  .home-page > section:not(#hero) header p {
+    white-space: normal;
+  }
 }

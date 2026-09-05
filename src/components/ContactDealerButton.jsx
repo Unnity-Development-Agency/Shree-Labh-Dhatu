@@ -23,8 +23,7 @@ export default function ContactDealerButton({
 }) {
   const reduceMotion = useReducedMotion();
 
-  const sizeClasses =
-    size === "lg" ? "px-7 py-3.5 text-sm" : "px-5 py-2.5 text-xs";
+  const sizeClasses = size === "lg" ? "min-w-56" : "min-w-48";
 
   const dealerHref = productName
     ? `${CONTACT_DEALER_HREF}?product=${encodeURIComponent(productName)}`
@@ -42,11 +41,11 @@ export default function ContactDealerButton({
         }
         whileHover={reduceMotion ? undefined : { scale: 1.03 }}
         whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-        className={`group inline-flex min-h-11 items-center gap-2.5 rounded-full border border-[#E53935]/40 bg-zinc-900 font-bold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E53935] ${sizeClasses}`}
+        className={`site-button ${sizeClasses}`}
       >
         Contact Dealer
         <ArrowRight
-          className="h-3.5 w-3.5 text-[#E53935] transition-transform duration-300 group-hover:translate-x-1"
+          className="h-4 w-4"
           aria-hidden="true"
         />
       </motion.a>
@@ -61,10 +60,10 @@ export default function ContactDealerButton({
           }
           whileHover={reduceMotion ? undefined : { scale: 1.03 }}
           whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-          className={`group inline-flex min-h-11 items-center gap-2.5 rounded-full border border-zinc-300 bg-white font-bold uppercase tracking-wide text-zinc-900 transition-colors duration-300 hover:border-[#E53935]/40 hover:bg-zinc-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E53935] ${sizeClasses}`}
+          className={`site-button site-button--outline ${sizeClasses}`}
         >
           Request a Quote
-          <FileText className="h-3.5 w-3.5 text-[#E53935]" aria-hidden="true" />
+          <FileText className="h-4 w-4" aria-hidden="true" />
         </motion.a>
       )}
     </div>

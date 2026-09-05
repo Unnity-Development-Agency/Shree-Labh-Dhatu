@@ -32,8 +32,7 @@ const fadeUpVariants = {
 };
 
 /* Image Live Link Who Stay in Contact Left SIde. */
-const contactImage =
-  "https://www.cupori.com/wp-content/uploads/2021/08/shutterstock_1305594064@2x.png";
+const contactImage = "./stock.png";
 
 const features = [
   {
@@ -103,26 +102,26 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <section className="w-full bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
+      <section className="w-full bg-[var(--page-bg)] px-5 pb-12 pt-28 sm:px-8 sm:pb-16 sm:pt-32 lg:px-12">
         <motion.div
           initial={reduceMotion ? false : "hidden"}
           whileInView={reduceMotion ? undefined : "visible"}
           viewport={{ once: false, amount: 0.15 }}
           variants={reduceMotion ? undefined : containerVariants}
-          className="mx-auto grid max-w-7xl grid-cols-1 overflow-hidden rounded-3xl shadow-sm shadow-black/5 lg:grid-cols-2"
+          className="mx-auto grid max-w-7xl grid-cols-1 overflow-hidden rounded-sm shadow-sm shadow-black/5 lg:grid-cols-2"
         >
           {/* ================= LEFT — info panel ================= */}
           <motion.div
             variants={reduceMotion ? undefined : fadeUpVariants}
-            className="relative flex flex-col justify-between bg-[#fcfbf9] p-6 sm:p-10 lg:p-12"
+            className="relative flex flex-col justify-between bg-[var(--surface)] p-6 sm:p-10 lg:p-12"
           >
             <div>
               {/* eyebrow */}
               <div className="flex items-center gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#E53935]/40 text-[#E53935]">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#E53935]/40 text-[var(--muted)]">
                   <Phone className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#E53935]">
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--muted)]">
                   Let&rsquo;s Connect
                 </span>
                 <span className="hidden h-px flex-1 bg-[#E53935]/30 sm:block" />
@@ -133,7 +132,7 @@ export default function ContactPage() {
                 Have a Requirement?
                 <br />
                 We&rsquo;re Here to{" "}
-                <span className="text-[#E53935]">Help.</span>
+                <span className="text-[var(--muted)]">Help.</span>
               </h1>
 
               <p className="mt-4 max-w-md text-sm leading-relaxed text-zinc-600 sm:text-base">
@@ -145,11 +144,11 @@ export default function ContactPage() {
               <ul className="mt-8 flex flex-col gap-5">
                 {features.map(({ icon: Icon, title, description }) => (
                   <li key={title} className="flex items-start gap-4">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#E53935]/10 text-[#E53935]">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--surface-muted)] text-[var(--muted)]">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span>
-                      <span className="block text-sm font-bold text-[#E53935] sm:text-base">
+                      <span className="block text-sm font-bold text-[var(--muted)] sm:text-base">
                         {title}
                       </span>
                       <span className="block text-xs leading-relaxed text-zinc-600 sm:text-sm">
@@ -177,11 +176,11 @@ export default function ContactPage() {
             className="bg-white p-6 sm:p-10 lg:p-12"
           >
             <div className="flex items-center gap-4">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#E53935]/40 text-[#E53935]">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#E53935]/40 text-[var(--muted)]">
                 <Mail className="h-4 w-4" aria-hidden="true" />
               </span>
               <div>
-                <h2 className="text-sm font-bold uppercase tracking-[0.15em] text-[#E53935] sm:text-base">
+                <h2 className="text-sm font-bold uppercase tracking-[0.15em] text-[var(--muted)] sm:text-base">
                   Send Us an Enquiry
                 </h2>
                 <p className="text-xs text-zinc-500 sm:text-sm">
@@ -242,10 +241,10 @@ export default function ContactPage() {
                   className="mb-2 block text-sm font-semibold text-zinc-900"
                 >
                   Product Interested In{" "}
-                  <span className="text-[#E53935]">*</span>
+                  <span className="text-[var(--muted)]">*</span>
                 </label>
                 <div className="relative">
-                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#E53935]">
+                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]">
                     <Package className="h-4.5 w-4.5" aria-hidden="true" />
                   </span>
                   <select
@@ -279,10 +278,10 @@ export default function ContactPage() {
                   className="mb-2 block text-sm font-semibold text-zinc-900"
                 >
                   Message / Requirement Details{" "}
-                  <span className="text-[#E53935]">*</span>
+                  <span className="text-[var(--muted)]">*</span>
                 </label>
                 <div className="relative">
-                  <span className="pointer-events-none absolute left-4 top-4 text-[#E53935]">
+                  <span className="pointer-events-none absolute left-4 top-4 text-[var(--muted)]">
                     <PenLine className="h-4.5 w-4.5" aria-hidden="true" />
                   </span>
                   <textarea
@@ -303,7 +302,7 @@ export default function ContactPage() {
                 disabled={status === "submitting"}
                 whileHover={reduceMotion ? undefined : { scale: 1.01 }}
                 whileTap={reduceMotion ? undefined : { scale: 0.99 }}
-                className="mt-1 flex min-h-12 w-full items-center justify-center gap-2.5 rounded-sm bg-[#E53935] text-sm font-bold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-[#C62828] disabled:cursor-not-allowed disabled:opacity-70"
+                className="site-button mt-1 w-full justify-center"
               >
                 {status === "submitting" ? (
                   "Sending..."
@@ -358,10 +357,10 @@ function Field({
         htmlFor={name}
         className="mb-2 block text-sm font-semibold text-zinc-900"
       >
-        {label} {required && <span className="text-[#E53935]">*</span>}
+        {label} {required && <span className="text-[var(--muted)]">*</span>}
       </label>
       <div className="relative">
-        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#E53935]">
+        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]">
           <Icon className="h-4.5 w-4.5" aria-hidden="true" />
         </span>
         <input

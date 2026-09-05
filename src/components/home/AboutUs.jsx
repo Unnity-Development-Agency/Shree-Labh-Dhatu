@@ -110,7 +110,7 @@ const AboutUs = () => {
     : trajectorySet.right;
 
   return (
-    <section className="w-full bg-white px-6 py-20 sm:py-24 overflow-hidden">
+    <section id="about" className="w-full bg-[var(--surface)] px-6 py-20 sm:py-24 overflow-hidden">
       <div className=" relative mx-auto w-full max-w-7xl">
         {/* Centered eyebrow + heading — same treatment as WhyChooseUS */}
         <motion.div
@@ -124,16 +124,16 @@ const AboutUs = () => {
             variants={reduceMotion ? undefined : fadeUpVariants}
             className="flex w-full max-w-xs items-center justify-center"
           >
-            <span className="h-0.5 w-full max-w-20 rounded-full bg-[#E53935]" />
-            <p className="mx-4 w-full whitespace-nowrap text-sm font-bold uppercase tracking-[0.2em] text-[#E53935]">
+            <span className="h-0.5 w-full max-w-20 rounded-full bg-[var(--brand)]" />
+            <p className="mx-4 w-full whitespace-nowrap text-sm font-bold uppercase tracking-[0.2em] text-[var(--brand-ink)]">
               About Us
             </p>
-            <span className="h-0.5 w-full max-w-20 rounded-full bg-[#E53935]" />
+            <span className="h-0.5 w-full max-w-20 rounded-full bg-[var(--brand)]" />
           </motion.div>
 
           <motion.h2
             variants={reduceMotion ? undefined : fadeUpVariants}
-            className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl"
+            className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl"
           >
             Shree Labh Dhatu Traders Pvt. Ltd.
           </motion.h2>
@@ -202,17 +202,17 @@ const AboutUs = () => {
             {/* "Since 1994" badge — small UI accent, not a bullet list */}
             <motion.div
               variants={reduceMotion ? undefined : fadeUpVariants}
-              className="inline-flex items-center gap-2 rounded-full border border-[#E53935]/20 bg-[#E53935]/5 px-4 py-1.5"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--brand)]/20 bg-[var(--brand)]/5 px-4 py-1.5"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#E53935]" />
-              <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#E53935]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand)]" />
+              <span className="text-xs font-bold uppercase tracking-[0.15em] text-[var(--brand-ink)]">
                 Since 1994 · 30+ Years of Trust
               </span>
             </motion.div>
 
             <motion.h3
               variants={reduceMotion ? undefined : fadeUpVariants}
-              className="mt-5 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl"
+              className="mt-5 text-2xl font-bold tracking-tight text-[var(--ink)] sm:text-3xl"
             >
               Trusted Traders. Trusted Quality.
             </motion.h3>
@@ -227,7 +227,7 @@ const AboutUs = () => {
 
             <motion.p
               variants={reduceMotion ? undefined : fadeUpVariants}
-              className="mt-5 text-sm leading-relaxed text-zinc-600 sm:text-base"
+              className="mt-5 text-sm leading-relaxed text-[var(--muted)] sm:text-base"
             >
               Our journey began in 1994 as Shree Arihant Metal Traders, and in
               2021, we evolved into Shree Labh Dhatu Traders Pvt. Ltd. — a
@@ -238,7 +238,7 @@ const AboutUs = () => {
 
             <motion.p
               variants={reduceMotion ? undefined : fadeUpVariants}
-              className="mt-5 text-sm leading-relaxed text-zinc-600 sm:text-base"
+              className="mt-5 text-sm leading-relaxed text-[var(--muted)] sm:text-base"
             >
               We specialize in copper plates, brass plates, copper wires, and a
               range of allied metal products, serving businesses that depend on
@@ -247,7 +247,7 @@ const AboutUs = () => {
 
             <motion.p
               variants={reduceMotion ? undefined : fadeUpVariants} 
-              className="mt-8 border-l-2 border-[#E53935] pl-5 font-serif text-lg italic leading-snug text-[#E53935]"
+              className="mt-8 border-l-2 border-[var(--brand)] pl-5 font-serif text-lg italic leading-snug text-[var(--brand-ink)]"
             >
               Trust is earned, plate by plate, order by order — that's the
               principle we continue to build on today.

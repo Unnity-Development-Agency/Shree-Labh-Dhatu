@@ -66,20 +66,20 @@ function TestimonialItem({ testimonial }) {
       <img
         src={testimonial.avatar}
         alt={`${testimonial.name} profile photo`}
-        className="h-11 w-11 shrink-0 rounded-full border-2 border-[#b45309]/20 object-cover p-0.5 sm:h-12 sm:w-12"
+        className="h-11 w-11 shrink-0 rounded-full border-2 border-[var(--brand)]/20 object-cover p-0.5 sm:h-12 sm:w-12"
       />
       <div className="relative min-w-0">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 pr-16">
-          <h3 className="text-sm font-semibold text-zinc-900">
+          <h3 className="text-sm font-semibold text-[var(--ink)]">
             {testimonial.name}
           </h3>
           <span className="hidden text-[10px] text-zinc-400 sm:inline">•</span>
-          <p className="basis-full truncate text-[10px] font-medium uppercase tracking-[0.1em] text-zinc-500">
+          <p className="basis-full truncate text-[10px] font-medium uppercase tracking-[0.1em] text-[var(--muted)]">
             {testimonial.role}
           </p>
         </div>
         <div
-          className="absolute right-0 top-0 flex items-center gap-0.5 text-[#b45309]"
+          className="absolute right-0 top-0 flex items-center gap-0.5 text-[var(--brand-ink)]"
           aria-label="5 out of 5 stars"
         >
           {Array.from({ length: 5 }).map((_, index) => (
@@ -90,7 +90,7 @@ function TestimonialItem({ testimonial }) {
             />
           ))}
         </div>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+        <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
           “{testimonial.review}”
         </p>
       </div>
@@ -101,7 +101,7 @@ function TestimonialItem({ testimonial }) {
 export default function Reviews() {
   return (
     <section
-      className="relative isolate overflow-hidden bg-[#fcfbf9] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24"
+      className="relative isolate overflow-hidden bg-[var(--page-bg)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24"
       aria-labelledby="reviews-heading"
     >
       <style>{`
@@ -143,31 +143,31 @@ export default function Reviews() {
           className="absolute inset-x-0 top-0 h-64 opacity-50"
           style={{
             backgroundImage:
-              "radial-gradient(rgba(180,83,9,0.2) 1px, transparent 1px)",
+              "radial-gradient(rgba(245,61,20,0.2) 1px, transparent 1px)",
             backgroundSize: "18px 18px",
             maskImage: "linear-gradient(to bottom, black, transparent)",
           }}
         />
-        <div className="absolute -right-32 top-8 h-72 w-72 rounded-full bg-[#b45309]/[0.07] blur-3xl" />
-        <div className="absolute left-[12%] top-20 h-px w-56 -rotate-12 bg-gradient-to-r from-transparent via-[#b45309]/20 to-transparent" />
+        <div className="absolute -right-32 top-8 h-72 w-72 rounded-full bg-[var(--brand)]/[0.07] blur-3xl" />
+        <div className="absolute left-[12%] top-20 h-px w-56 -rotate-12 bg-gradient-to-r from-transparent via-[var(--brand)]/20 to-transparent" />
       </div>
 
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto max-w-2xl text-center">
           <div className="flex items-center justify-center">
-            <span className="h-0.5 w-12 rounded-full bg-[#E53935] sm:w-20" />
-            <p className="mx-4 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] text-[#E53935]">
+            <span className="h-0.5 w-12 rounded-full bg-[var(--brand)] sm:w-20" />
+            <p className="mx-4 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--brand-ink)]">
               What Our Customers Say
             </p>
-            <span className="h-0.5 w-12 rounded-full bg-[#E53935] sm:w-20" />
+            <span className="h-0.5 w-12 rounded-full bg-[var(--brand)] sm:w-20" />
           </div>
           <h2
             id="reviews-heading"
-            className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl"
+            className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl lg:text-5xl"
           >
-            Client <span className="text-[#E53935]">Voices</span>
+            Client <span className="text-[var(--ink)]">Voices</span>
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-zinc-600 sm:text-base">
+          <p className="mt-4 text-sm leading-relaxed text-[var(--muted)] sm:text-base">
             Real Feedback From Bussinesses That Trust Us For Quality Services
           </p>
         </header>

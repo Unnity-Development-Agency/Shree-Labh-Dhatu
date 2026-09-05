@@ -6,6 +6,7 @@ import {
   useReducedMotion,
   useInView,
   useMotionValue,
+  useMotionTemplate,
   useTransform,
   useSpring,
   useScroll,
@@ -14,7 +15,7 @@ import { homeData } from "../../data/homeData";
 
 const EASE = [0.22, 1, 0.36, 1];
 const INK_EASE = [0.65, 0, 0.35, 1]; // slow, deliberate "pen" easing
-const RED = "#E53935";
+const RED = "var(--ink)";
 
 /* ------------------------------------------------------------------ */
 /*  Each icon is a small set of strokes drawn ONE AFTER ANOTHER        */
@@ -226,7 +227,7 @@ const TestedVerifiedIcon = () => (
     `}</style>
     <g
       fill="none"
-      stroke="#E30613"
+      stroke="var(--ink)"
       strokeWidth="8"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -249,7 +250,7 @@ const TestedVerifiedIcon = () => (
         cx="345"
         cy="300"
         r="4"
-        fill="#E30613"
+        fill="var(--ink)"
         stroke="none"
       />
       <circle
@@ -257,7 +258,7 @@ const TestedVerifiedIcon = () => (
         cx="380"
         cy="310"
         r="3"
-        fill="#E30613"
+        fill="var(--ink)"
         stroke="none"
       />
       <circle
@@ -265,7 +266,7 @@ const TestedVerifiedIcon = () => (
         cx="410"
         cy="295"
         r="3.5"
-        fill="#E30613"
+        fill="var(--ink)"
         stroke="none"
       />
     </g>
@@ -363,6 +364,7 @@ const TiltCard = ({ reduceMotion, children }) => {
   // subtle highlight that follows the cursor, for the "premium glass" feel
   const glowX = useTransform(x, [-0.5, 0.5], ["10%", "90%"]);
   const glowY = useTransform(y, [-0.5, 0.5], ["10%", "90%"]);
+  const glow = useMotionTemplate`radial-gradient(circle at ${glowX} ${glowY}, rgba(35,44,46,0.08), transparent 55%)`;
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -377,7 +379,7 @@ const TiltCard = ({ reduceMotion, children }) => {
 
   if (reduceMotion) {
     return (
-      <div className="group flex flex-col items-center gap-3 rounded-2xl bg-white px-4 py-10 text-center shadow-sm">
+      <div className="group flex flex-col items-center gap-3 rounded-2xl bg-[var(--surface)] px-4 py-10 text-center shadow-sm">
         {children}
       </div>
     );
@@ -395,18 +397,18 @@ const TiltCard = ({ reduceMotion, children }) => {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className="group relative flex flex-col items-center gap-3 overflow-hidden  px-4 py-10 text-center shadow-[0_4px_16px_rgba(0,0,0,0.02)] transition-shadow duration-300 ease-out hover:shadow-[0_32px_60px_-12px_rgba(229,57,53,0.4)] cursor-pointer"
+        className="group relative flex flex-col items-center gap-3 overflow-hidden  px-4 py-10 text-center shadow-[0_4px_16px_rgba(0,0,0,0.02)] transition-shadow duration-300 ease-out hover:shadow-[0_32px_60px_-12px_rgba(35,44,46,0.12)] cursor-pointer"
       >
         {/* cursor-tracking sheen — bumped up a bit so the tilt reads clearly on hover */}
         <motion.div
           aria-hidden
           className="cursor-pointer absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           style={{
-            background: `radial-gradient(circle at ${glowX} ${glowY}, rgba(229,57,53,0.22), transparent 55%)`,
+            background: glow,
           }}
         />
         {/* thin glowing edge on hover */}
-        <div className="pointer-events-none absolute inset-0 border border-transparent transition-colors duration-300 group-hover:border-[#E53935]/35" />
+        <div className="pointer-events-none absolute inset-0 border border-transparent transition-colors duration-300 group-hover:border-[var(--brand)]/35" />
 
         <div style={{ transform: "translateZ(40px)" }} className="contents">
           {children}
@@ -424,9 +426,9 @@ const TiltCard = ({ reduceMotion, children }) => {
 /*  their own white surface + hover glow untouched.                      */
 /* ------------------------------------------------------------------ */
 
-const SECTION_BG_START = "#f5f5f5"; // neutral, section just entering
-const SECTION_BG_MID = "#f4dbda"; // new — soft mid-point tone
-const SECTION_BG_END = "#eec2c0"; // moved here from old MID — final, less-bold tints
+const SECTION_BG_START = "#f4f3ef"; // neutral, section just entering
+const SECTION_BG_MID = "#f0efe9"; // new — soft mid-point tone
+const SECTION_BG_END = "#eae9e2"; // moved here from old MID — final, less-bold tints
 
 const WhyChooseUS = () => {
   const reduceMotion = useReducedMotion();
@@ -448,7 +450,7 @@ const WhyChooseUS = () => {
       ref={sectionRef}
       style={reduceMotion ? undefined : { backgroundColor }}
       className={`w-full px-6 py-20 sm:py-24 ${
-        reduceMotion ? "bg-[#f5f5f5]" : ""
+        reduceMotion ? "bg-[#f4f3ef]" : ""
       }`}
     >
       <div className="mx-auto flex w-full max-w-[1400px] flex-col items-center">
@@ -464,16 +466,16 @@ const WhyChooseUS = () => {
             variants={reduceMotion ? undefined : fadeUpVariants}
             className="flex w-full max-w-sm items-center justify-center"
           >
-            <span className="h-0.5 w-full max-w-20 rounded-full bg-[#E53935]" />
-            <p className="mx-4 w-full whitespace-nowrap text-center text-sm font-bold uppercase tracking-[0.2em] text-[#E53935]">
+            <span className="h-0.5 w-full max-w-20 rounded-full bg-[var(--brand)]" />
+            <p className="mx-4 w-full whitespace-nowrap text-center text-sm font-bold uppercase tracking-[0.2em] text-[var(--brand-ink)]">
               Why Choose Us
             </p>
-            <span className="h-0.5 w-full max-w-20 rounded-full bg-[#E53935]" />
+            <span className="h-0.5 w-full max-w-20 rounded-full bg-[var(--brand)]" />
           </motion.div>
 
           <motion.h2
             variants={reduceMotion ? undefined : fadeUpVariants}
-            className="mt-4 text-center text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl"
+            className="mt-4 text-center text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl"
           >
             Built on Quality. Backed by Trust.
           </motion.h2>
@@ -521,10 +523,10 @@ const WhyChooseUS = () => {
                   )}
                 </div>
 
-                <h3 className="text-lg font-bold text-zinc-900">
+                <h3 className="text-lg font-bold text-[var(--ink)]">
                   {item.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-zinc-600">
+                <p className="text-sm leading-relaxed text-[var(--muted)]">
                   {item.subtitle}
                 </p>
               </TiltCard>

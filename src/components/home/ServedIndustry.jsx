@@ -77,12 +77,12 @@ function IndustryCard({ item, index, reduceMotion }) {
             : { y: -6, rotateY: index % 2 === 0 ? 1.5 : -1.5 }
         }
         transition={{ duration: 0.22, ease: EASE }}
-        className="group relative min-h-64 overflow-hidden rounded-sm border border-zinc-200/90 bg-white shadow-[0_16px_34px_-28px_rgba(24,24,27,0.5)] transition-shadow hover:border-[#E53935]/25 hover:shadow-[0_24px_38px_-28px_rgba(229,57,53,0.5)] sm:min-h-72 pointer-events-none"
+        className="group relative min-h-64 overflow-hidden rounded-sm border border-[var(--line)]/90 bg-[var(--surface)] shadow-[0_16px_34px_-28px_rgba(24,24,27,0.5)] transition-shadow hover:border-[var(--brand)]/25 hover:shadow-[0_24px_38px_-28px_rgba(245,61,20,0.5)] sm:min-h-72 pointer-events-none"
       >
         <div className="flex h-full min-h-64 sm:min-h-72">
           <div className="relative z-10 flex w-[64%] flex-col justify-between p-5 sm:p-7">
             <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-sm bg-[#E53935]/[0.09] text-[#E53935]">
+              <span className="flex h-11 w-11 items-center justify-center rounded-sm bg-[var(--brand)]/[0.09] text-[var(--brand-ink)]">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <span className="text-xs font-semibold tracking-[0.16em] text-zinc-400">
@@ -90,16 +90,16 @@ function IndustryCard({ item, index, reduceMotion }) {
               </span>
             </div>
             <div className="mt-10">
-              <span className="mb-3 block h-0.5 w-9 bg-[#E53935]" />
-              <h3 className="text-lg font-bold leading-tight text-zinc-900 sm:text-2xl">
+              <span className="mb-3 block h-0.5 w-9 bg-[var(--brand)]" />
+              <h3 className="text-lg font-bold leading-tight text-[var(--ink)] sm:text-2xl">
                 {item.title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-zinc-600">
+              <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
                 {item.description}
               </p>
             </div>
           </div>
-          <div className="relative w-[36%] overflow-hidden bg-[#f4f1ed]">
+          <div className="relative w-[36%] overflow-hidden bg-[#f2eae9]">
             <Image
               src={item.image}
               alt=""
@@ -120,8 +120,8 @@ const ServedIndustry = () => {
   const viewport = { once: true, amount: 0.16 };
 
   return (
-    <section className="relative overflow-hidden bg-[#f8f7f5] py-16 sm:py-20">
-      <div className="pointer-events-none absolute -right-24 top-12 h-72 w-72 rounded-full bg-[#E53935]/[0.035] blur-3xl" />
+    <section className="relative overflow-hidden bg-[var(--surface-muted)] py-16 sm:py-20">
+      <div className="pointer-events-none absolute -right-24 top-12 h-72 w-72 rounded-full bg-[var(--brand)]/[0.035] blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.header
@@ -131,24 +131,25 @@ const ServedIndustry = () => {
           variants={reduceMotion ? undefined : containerVariants}
           className="mx-auto max-w-3xl text-center"
         >
-          <motion.p
+          <motion.div
             variants={reduceMotion ? undefined : fadeUpVariants}
-            className="inline-flex items-center gap-2 rounded-full border border-[#E53935]/15 bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#E53935] shadow-sm"
+            className="mx-auto flex w-full max-w-sm items-center justify-center"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#E53935]" />{" "}
-            Industries we serve
-          </motion.p>
+            <span className="h-0.5 w-full max-w-20 rounded-full bg-[var(--brand)]" />
+            <p className="mx-4 whitespace-nowrap text-sm font-bold uppercase tracking-[0.2em] text-[var(--brand-ink)]">Industries we serve</p>
+            <span className="h-0.5 w-full max-w-20 rounded-full bg-[var(--brand)]" />
+          </motion.div>
           <motion.h2
             variants={reduceMotion ? undefined : fadeUpVariants}
             id="served-industry-heading"
-            className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl"
+            className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl lg:text-5xl"
           >
             Materials that power{" "}
-            <span className="text-[#E53935]">everyday industry.</span>
+            <span className="text-[var(--ink)]">everyday industry.</span>
           </motion.h2>
           <motion.p
             variants={reduceMotion ? undefined : fadeUpVariants}
-            className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-zinc-600 sm:text-base"
+            className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[var(--muted)] sm:text-base"
           >
             Dependable non-ferrous metals for products, infrastructure and
             specialist applications.

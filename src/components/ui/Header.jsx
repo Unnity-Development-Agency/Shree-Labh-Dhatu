@@ -2,21 +2,21 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Search, X, ArrowUpRight, Menu } from "lucide-react";
+import { X, ArrowUpRight, Menu } from "lucide-react";
 import Link from "next/link";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
-  {
-    label: "About Us",
-    href: "/About",
-    submenu: [
-      { label: "Company Overview", href: "/about/overview" },
-      { label: "Leadership", href: "/about/leadership" },
-      { label: "Committees Of The Board", href: "/about/committees" },
-      { label: "Group Companies", href: "/about/group-companies" },
-    ],
-  },
+  // {
+  //   label: "About Us",
+  //   href: "/#about",
+  //   submenu: [
+  //     { label: "Company Overview", href: "/about/overview" },
+  //     { label: "Leadership", href: "/about/leadership" },
+  //     { label: "Committees Of The Board", href: "/about/committees" },
+  //     { label: "Group Companies", href: "/about/group-companies" },
+  //   ],
+  // },
   {
     label: "Our Products",
     href: "/copper",
@@ -42,6 +42,7 @@ export default function Header() {
   const [activeIndex, setActiveIndex] = useState(null);
   const tickingRef = useRef(false);
   const closeTimerRef = useRef(null);
+  const dialogRef = useRef(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -49,7 +50,9 @@ export default function Header() {
       if (tickingRef.current) return;
       tickingRef.current = true;
       window.requestAnimationFrame(() => {
-        setScrolled(window.scrollY > SCROLL_THRESHOLD);
+        const isScrolled = window.scrollY > SCROLL_THRESHOLD;
+        setScrolled(isScrolled);
+        if (isScrolled) setActiveIndex(null);
         tickingRef.current = false;
       });
     };
@@ -58,15 +61,25 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Drop any open hover-menu instantly once the header starts sliding away
-  useEffect(() => {
-    if (scrolled) setActiveIndex(null);
-  }, [scrolled]);
-
   useEffect(() => {
     if (!menuOpen) return undefined;
+    const previousFocus = document.activeElement;
+    dialogRef.current?.querySelector("button")?.focus();
     const handleKey = (e) => {
       if (e.key === "Escape") setMenuOpen(false);
+      if (e.key === "Tab") {
+        const items = dialogRef.current?.querySelectorAll("a[href], button");
+        if (!items?.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -74,6 +87,7 @@ export default function Header() {
     return () => {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", handleKey);
+      previousFocus?.focus();
     };
   }, [menuOpen]);
 
@@ -104,21 +118,18 @@ export default function Header() {
       {/* Main header bar — slides fully off-screen (left → right) and fades out once scrolled;
          reverses (fades in while sliding back to x:0) as the user scrolls back up */}
       <motion.header
+        inert={scrolled || menuOpen}
         initial={false}
         animate={{ x: scrolled ? "100%" : "0%", opacity: scrolled ? 0 : 1 }}
         transition={{ duration: reduceMotion ? 0 : 0.65, ease: EASE }}
         style={{ height: HEADER_HEIGHT }}
-        className="fixed inset-x-0 top-0 z-50 flex w-full items-center bg-[#08080c]/80 backdrop-blur-md"
+        className="fixed inset-x-0 top-0 z-50 flex w-full items-center bg-[var(--dark)]/95 backdrop-blur-md"
       >
         {/* Brand-red wash — stays translucent so the dark header shows through underneath it;
            only turns into a richer, more solid gradient while a mega-menu is open */}
         <div
           aria-hidden="true"
-          className={`pointer-events-none absolute inset-0 -z-10 transition-colors duration-500 ${
-            isSubmenuOpen
-              ? "bg-gradient-to-r from-[#EF4444] to-[#B91C1C]"
-              : "bg-[#E53935]"
-          }`}
+          className="pointer-events-none absolute inset-0 -z-10 bg-[var(--dark)]/60"
         />
         <div
           aria-hidden="true"
@@ -153,7 +164,7 @@ export default function Header() {
               >
                 {link.label}
                 <span
-                  className="pointer-events-none absolute inset-x-0 -bottom-0.5 h-[1.5px] origin-left bg-[#fff] transition-transform duration-300 ease-out"
+                  className="pointer-events-none absolute inset-x-0 -bottom-0.5 h-[1.5px] origin-left bg-[var(--brand-light)] transition-transform duration-300 ease-out"
                   style={{ transform: `scaleX(${activeIndex === i ? 1 : 0})` }}
                 />
               </a>
@@ -166,7 +177,7 @@ export default function Header() {
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={menuOpen}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-white transition-colors duration-300 hover:bg-white/10 lg:hidden"
+            className="site-button site-button--on-dark site-icon-button header-mobile-toggle"
           >
             <Menu className="h-4 w-4" strokeWidth={2} />
           </button>
@@ -190,10 +201,12 @@ export default function Header() {
           ease: EASE,
           delay: scrolled ? 0.15 : 0,
         }}
-        style={{ pointerEvents: scrolled ? "auto" : "none" }}
+        aria-hidden={!scrolled || menuOpen}
+        style={{ pointerEvents: scrolled && !menuOpen ? "auto" : "none", visibility: scrolled && !menuOpen ? "visible" : "hidden" }}
         whileHover={{ scale: scrolled ? 1.06 : 0.7 }}
         whileTap={{ scale: scrolled ? 0.94 : 0.7 }}
-        className="fixed right-5 top-5 z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#E53935] text-white shadow-[0_14px_36px_-12px_rgba(15,23,42,0.6)] transition-shadow duration-300 hover:ring-2 hover:ring-[#E53935]/50 sm:right-8 sm:top-6 lg:h-[60px] lg:w-[60px]"
+        tabIndex={scrolled && !menuOpen ? 0 : -1}
+        className="site-button site-button--light site-icon-button fixed right-5 top-5 z-50 shadow-lg sm:right-8 sm:top-6"
       >
         <Menu className="h-4 w-4 lg:h-5 lg:w-5" strokeWidth={2} />
       </motion.button>
@@ -210,7 +223,7 @@ export default function Header() {
             onMouseEnter={() => openSubmenu(activeIndex)}
             onMouseLeave={scheduleCloseSubmenu}
             style={{ top: HEADER_HEIGHT }}
-            className="fixed inset-x-0 z-40 hidden border-t border-white/10 bg-slate-950/98 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl lg:block"
+            className="fixed inset-x-0 z-40 hidden border-t border-white/10 bg-[var(--dark)]/98 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl lg:block"
           >
             <div className="mx-auto max-w-[1600px] px-6 py-10 md:px-10 lg:px-14">
               <p className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-white/40">
@@ -221,10 +234,10 @@ export default function Header() {
                   <a
                     key={sub.label}
                     href={sub.href}
-                    className="group flex items-center justify-between gap-3 border-b border-white/10 pb-3 text-[15px] font-medium text-white/80 transition-colors duration-300 hover:text-[#E53935]"
+                    className="group flex items-center justify-between gap-3 border-b border-white/10 pb-3 text-[15px] font-medium text-white/80 transition-colors duration-300 hover:text-[var(--brand-light)]"
                   >
                     {sub.label}
-                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-white/30 transition-colors duration-300 group-hover:text-[#E53935]" />
+                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-white/30 transition-colors duration-300 group-hover:text-[var(--brand-light)]" />
                   </a>
                 ))}
               </div>
@@ -237,11 +250,12 @@ export default function Header() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            ref={dialogRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: EASE }}
-            className="fixed inset-0 z-50 bg-slate-950"
+            className="fixed inset-0 z-50 bg-[var(--dark)]"
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation"
@@ -250,12 +264,12 @@ export default function Header() {
               type="button"
               onClick={() => setMenuOpen(false)}
               aria-label="Close menu"
-              className="absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white transition-colors duration-300 hover:bg-white/10 md:right-10 md:top-8"
+              className="site-button site-button--on-dark site-icon-button absolute right-6 top-6 md:right-10 md:top-8"
             >
               <X className="h-5 w-5" />
             </button>
 
-            <div className="flex h-full flex-col justify-center overflow-y-auto px-8 py-24 md:px-16 lg:px-24">
+            <div className="flex h-full flex-col overflow-y-auto px-6 py-24 sm:px-8 md:px-16 lg:px-24">
               <motion.nav
                 initial="hidden"
                 animate="visible"
@@ -267,24 +281,39 @@ export default function Header() {
                 className="flex flex-col gap-1"
               >
                 {NAV_LINKS.map((link, i) => (
-                  <motion.a
-                    key={link.label}
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    variants={{
-                      hidden: { opacity: 0, y: 40 },
-                      visible: { opacity: 1, y: 0 },
-                    }}
-                    transition={{ duration: 0.6, ease: EASE }}
-                    className="group flex items-baseline gap-4 border-b border-white/10 py-3.5 md:py-4"
-                  >
-                    <span className="text-xs text-white/40 tabular-nums">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-[clamp(1.75rem,5vw,3.25rem)] font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-[#E53935]">
-                      {link.label}
-                    </span>
-                  </motion.a>
+                  <div key={link.label}>
+                    <motion.a
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      variants={{
+                        hidden: { opacity: 0, y: 40 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      transition={{ duration: 0.6, ease: EASE }}
+                      className="group flex items-baseline gap-4 border-b border-white/10 py-3.5 md:py-4"
+                    >
+                      <span className="text-xs text-white/40 tabular-nums">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-[clamp(1.75rem,5vw,3.25rem)] font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-[var(--brand-light)]">
+                        {link.label}
+                      </span>
+                    </motion.a>
+                    {link.label === "Our Products" && (
+                      <div className="grid grid-cols-2 gap-2 py-3">
+                        {link.submenu.map((sub) => (
+                          <Link
+                            key={sub.href}
+                            href={sub.href}
+                            onClick={() => setMenuOpen(false)}
+                            className="flex min-h-11 items-center border border-white/15 px-3 py-2 text-sm text-white/85 hover:border-[var(--brand)] hover:text-[var(--brand-light)]"
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </motion.nav>
 
@@ -297,7 +326,7 @@ export default function Header() {
                 <a
                   href="/contact"
                   onClick={() => setMenuOpen(false)}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#E53935] px-5 py-2.5 font-medium text-white transition-transform duration-300 hover:scale-105"
+                  className="site-button site-button--light"
                 >
                   Contact us
                   <ArrowUpRight className="h-3.5 w-3.5" />
