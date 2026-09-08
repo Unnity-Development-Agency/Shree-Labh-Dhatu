@@ -261,6 +261,47 @@ const copperProducts = [
       { label: "Standard", value: "ASTM B3 / IS 8130" },
     ],
   },
+  {
+    id: "copper-rods",
+    name: "Copper Rods",
+    shortName: "Rods",
+    image: "/stock.png",
+    shortDescription:
+      "Drawn copper rods engineered for dependable, consistent electrical performance.",
+    description:
+      "Copper rods is drawn from high-purity copper rod through a series of precision dies to reach the target gauge, with conductivity and tensile strength checked at multiple stages of production. Its low resistivity makes it a standard choice for power and signal transmission, while its ductility allows it to be bent, coiled, and routed through tight spaces without cracking or work-hardening prematurely. We supply both bare and insulated wire depending on the application, in gauges ranging from fine instrumentation wire to heavier-duty power conductors. Every spool is tested for continuity and conductivity before it leaves our facility, so installers and manufacturers can rely on consistent performance from the first meter to the last.",
+    features: [
+      "Low Electrical Resistivity",
+      "High Ductility",
+      "Consistent Gauge Accuracy",
+      "Bare & Insulated Options",
+      "Tested for Continuity",
+      "Reliable Spool-to-Spool Quality",
+    ],
+    applications: [
+      {
+        title: "Power Transmission",
+        description: "Domestic and industrial wiring.",
+      },
+      {
+        title: "Electrical",
+        description: "Panel wiring and control circuits.",
+      },
+      { title: "Automotive", description: "Harness and connector wiring." },
+      {
+        title: "Industrial Equipment",
+        description: "Motor and machine wiring.",
+      },
+    ],
+    specifications: [
+      { label: "Material", value: "Copper" },
+      { label: "Grade", value: "C11000 (ETP)" },
+      { label: "Gauge Range", value: "0.1mm – 10mm dia." },
+      { label: "Conductivity", value: "≥ 101% IACS" },
+      { label: "Finish", value: "Bare / Enameled / PVC Insulated" },
+      { label: "Standard", value: "ASTM B3 / IS 8130" },
+    ],
+  },
 ];
 
 export default copperProducts;

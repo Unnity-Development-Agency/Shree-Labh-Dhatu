@@ -1,25 +1,41 @@
 import React from "react";
-import {
-  FaLinkedinIn,
-  FaInstagram,
-  FaPhoneAlt,
-  FaEnvelope,
-  FaClock,
-  FaMapMarkerAlt,
-} from "react-icons/fa";
-
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import Link from "next/link";
 const quickLinks = [
-  "Home",
-  "About Us",
-  "Products",
-  "Industries We Serve",
-  "Contact",
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Products",
+    href: "/copper",
+  },
+  {
+    label: "Gallery",
+    href: "/gallery",
+  },
+  {
+    label: "Contact Us",
+    href: "/contact",
+  },
 ];
 const productLinks = [
-  "Copper Plates",
-  "Brass Plates",
-  "Copper Wires",
-  "Allied Metal Products",
+  {
+    label: "Copper Plates",
+    href: "/copper",
+  },
+  {
+    label: "Brass Plates",
+    href: "/brass",
+  },
+  {
+    label: "Aluminium Plates",
+    href: "/aluminium",
+  },
+  {
+    label: "Stainless Steel Plates",
+    href: "/stainless-steel",
+  },
 ];
 
 const trustBadges = [
@@ -62,7 +78,7 @@ export default function Footer() {
               industry.
             </p>
             <div className="mt-6 flex gap-3">
-              <a
+              {/* <a
                 href="#"
                 aria-label="LinkedIn"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-500/60 text-gray-300 transition-colors hover:border-red-500 hover:text-red-500"
@@ -75,14 +91,14 @@ export default function Footer() {
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-500/60 text-gray-300 transition-colors hover:border-red-500 hover:text-red-500"
               >
                 <FaInstagram size={16} />
-              </a>
-              <a
+              </a> */}
+              <Link
                 href="https://wa.me/919810296868"
                 aria-label="WhatsApp"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-500/60 text-xs font-semibold text-gray-300 transition-colors hover:border-red-500 hover:text-red-500"
               >
                 WA
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -94,12 +110,12 @@ export default function Footer() {
             <span className="mt-2 block h-0.5 w-8 bg-red-500" />
             <ul className="mt-5 space-y-3 text-sm">
               {quickLinks.map((link) => (
-                <li key={link}>
+                <li key={link.label}>
                   <a
-                    href="#"
+                    href={link.href}
                     className="text-gray-400 transition-colors hover:text-white"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -114,12 +130,12 @@ export default function Footer() {
             <span className="mt-2 block h-0.5 w-8 bg-red-500" />
             <ul className="mt-5 space-y-3 text-sm">
               {productLinks.map((link) => (
-                <li key={link}>
+                <li key={link.label}>
                   <a
-                    href="#"
+                    href={link.href}
                     className="text-gray-400 transition-colors hover:text-white"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -144,6 +160,17 @@ export default function Footer() {
                   3777 main road pahari dhiraj , sadar bazar Delhi 110006
                 </span>
               </li>
+              <li className="flex gap-3">
+                <FaMapMarkerAlt
+                  size={16}
+                  className="mt-0.5 shrink-0 text-gray-500"
+                />
+                <span>
+                  Branch 2
+                  <br />
+                  A/95 Main Gurudwara road new seelampur Delhi -110053
+                </span>
+              </li>
               <li className="flex items-center gap-3">
                 <FaPhoneAlt size={16} className="shrink-0 text-gray-500" />
                 <a href="tel:+91 9810296868">+91 9810296868</a>
@@ -154,10 +181,10 @@ export default function Footer() {
                   shreelabh3777@gmail.com
                 </a>
               </li>
-              <li className="flex items-center gap-3">
+              {/* <li className="flex items-center gap-3">
                 <FaClock size={16} className="shrink-0 text-gray-500" />
                 <span>Mon – Sat: 9:30 AM – 7:00 PM</span>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -168,10 +195,10 @@ export default function Footer() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-xs text-gray-500 sm:flex-row">
           <p>© 2026 Shree Labh Dhatu Traders Pvt. Ltd. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="transition-colors hover:text-white">
+            <a href="/" className="transition-colors hover:text-white">
               Privacy Policy
             </a>
-            <a href="#" className="transition-colors hover:text-white">
+            <a href="/" className="transition-colors hover:text-white">
               Terms &amp; Conditions
             </a>
           </div>

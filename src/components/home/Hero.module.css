@@ -206,7 +206,7 @@
 .toolButtons button:hover,
 .toolButtons button[aria-pressed="true"] {
   border-color: var(--brand);
-  color: var(--brand-light);
+  /* color: var(--brand-light);   */
 }
 .bottom {
   border-top: 1px solid #b7c4bd2e;

@@ -13,6 +13,7 @@ export const MATERIALS = {
         description:
           "Available in 90%, 98%, and 99% grades, with standard 14 × 48 inch sheets, half-hard and soft temper options, and custom sizes available on order.",
       },
+      
       {
         name: "Coil",
         image: "/images/home/Copper-coil.png",

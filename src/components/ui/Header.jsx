@@ -202,7 +202,10 @@ export default function Header() {
           delay: scrolled ? 0.15 : 0,
         }}
         aria-hidden={!scrolled || menuOpen}
-        style={{ pointerEvents: scrolled && !menuOpen ? "auto" : "none", visibility: scrolled && !menuOpen ? "visible" : "hidden" }}
+        style={{
+          pointerEvents: scrolled && !menuOpen ? "auto" : "none",
+          visibility: scrolled && !menuOpen ? "visible" : "hidden",
+        }}
         whileHover={{ scale: scrolled ? 1.06 : 0.7 }}
         whileTap={{ scale: scrolled ? 0.94 : 0.7 }}
         tabIndex={scrolled && !menuOpen ? 0 : -1}
@@ -331,8 +334,7 @@ export default function Header() {
                   Contact us
                   <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
-                <span>info@stratum.com</span>
-                <span>+1 (212) 555-0192</span>
+                {/* s */}
               </motion.div>
             </div>
           </motion.div>
