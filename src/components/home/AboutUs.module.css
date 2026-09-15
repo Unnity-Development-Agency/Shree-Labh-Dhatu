@@ -1,0 +1,58 @@
+.section { padding: 112px 5%; background: var(--surface); color: var(--ink); overflow: clip; scroll-margin-top: 90px; }
+.inner { max-width: 1280px; margin: auto; display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: center; gap: 64px; }
+.copy { min-width: 0; }
+.eyebrow { display: flex; align-items: center; gap: 12px; font-size: 10px; font-weight: 600; letter-spacing: .18em; color: var(--muted); }
+.eyebrow > span { width: 24px; height: 2px; background: var(--brand); }
+.since { display: flex; gap: 16px; align-items: center; margin-top: 36px; font-size: 10px; letter-spacing: .12em; color: var(--brand-ink); }
+.since span { padding-left: 16px; border-left: 1px solid var(--line); color: var(--muted); letter-spacing: .02em; }
+.copy h2 { margin-top: 18px; font-size: clamp(2.5rem, 4.2vw, 4rem); font-weight: 450; letter-spacing: -.055em; line-height: 1.09; }
+.copy h2 em { font-family: Georgia, serif; font-weight: 400; }
+.company { margin-top: 22px; font-size: 13px; font-weight: 600; }
+.copy > p:not(.eyebrow):not(.since):not(.company) { margin-top: 18px; font-size: 13px; line-height: 1.9; color: var(--muted); }
+.copy > p.lead { font-size: 15px !important; color: var(--ink) !important; }
+.copy blockquote { margin-top: 26px; border-left: 2px solid var(--brand); padding-left: 18px; font: italic 19px/1.5 Georgia, serif; }
+.copy blockquote span { display: block; margin-top: 7px; color: var(--muted); font: 11px/1.7 var(--font-geist-sans), sans-serif; }
+.cta { margin-top: 28px; }
+.cta svg { transition: transform .25s; }
+.cta:hover svg { transform: translateX(3px); }
+.carousel { min-width: 0; }
+.stage { position: relative; height: 560px; perspective: 1200px; touch-action: pan-y; }
+.card { position: absolute; top: 20px; left: 50%; width: 72%; max-width: 370px; height: 500px; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.22, 1, .36, 1), opacity .8s; backface-visibility: hidden; }
+.cardSurface { height: 100%; border: 1px solid var(--line); border-radius: 10px; background: var(--page-bg); box-shadow: inset 0 1px 0 var(--surface), 0 18px 35px color-mix(in srgb, var(--ink) 8%, transparent); transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform .35s ease-out, box-shadow .35s; backface-visibility: hidden; }
+.card[data-position="active"] { transform: translateX(-50%) translateZ(45px) scale(1.015); z-index: 3; }
+.card[data-position="previous"] { transform: translateX(-80%) translateZ(-150px) rotateY(-12deg) scale(.94); opacity: 1; z-index: 1; pointer-events: none; }
+.card[data-position="next"] { transform: translateX(-20%) translateZ(-150px) rotateY(12deg) scale(.94); opacity: 1; z-index: 1; pointer-events: none; }
+.cardTop { display: flex; justify-content: space-between; padding: 23px 24px 0; color: var(--muted); text-transform: uppercase; font-size: 9px; letter-spacing: .14em; }
+.cardTop > span:last-child { color: var(--brand-ink); }
+.art { height: 185px; display: grid; place-items: center; position: relative; margin: 8px 12px; }
+.material { position: absolute; font-size: clamp(2rem, 4vw, 3.7rem); font-weight: 500; letter-spacing: -.055em; color: color-mix(in srgb, var(--ink) 7%, transparent); }
+.art img { width: 86%; height: 175px; object-fit: contain; position: relative; filter: drop-shadow(0 12px 8px color-mix(in srgb, var(--ink) 12%, transparent)); }
+.cardCopy { padding: 0 25px 24px; }
+.cardCopy h3 { max-width: 260px; font-size: 25px; font-weight: 450; letter-spacing: -.04em; line-height: 1.15; }
+.cardCopy p { margin-top: 13px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.cardFoot { display: flex; align-items: center; gap: 8px; margin-top: 19px; padding-top: 15px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+.cardFoot > span { width: 5px; height: 5px; background: var(--brand); border-radius: 50%; }
+.controls { display: flex; align-items: center; justify-content: space-between; gap: 20px; max-width: 370px; margin: 12px auto 0; }
+.pagination { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pagination > span:first-child { color: var(--ink); }
+.rule { height: 1px; width: 38px; background: var(--line); }
+.buttons { display: flex; gap: 6px; }
+.caption { text-align: center; margin-top: 22px; font-size: 10px; letter-spacing: .04em; color: var(--muted); }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (min-width: 901px) and (max-width: 1150px) { .inner { gap: 32px; } .card { width: 79%; height: 520px; } .stage { height: 570px; perspective: 1600px; } .cardCopy { padding-inline: 20px; } }
+@media (max-width: 900px) { .section { padding: 80px 6%; } .inner { grid-template-columns: minmax(0, 1fr); gap: 44px; } .copy { max-width: 640px; } .carousel { width: 100%; max-width: 600px; margin: auto; } .stage { perspective: 1600px; } }
+@media (max-width: 640px) { .inner { gap: 30px; } .since { margin-top: 26px; } .copy h2 { font-size: clamp(2.25rem, 9vw, 3rem) !important; } .stage { height: 555px; perspective: 1800px; } .card { top: 14px; width: calc(100% - 24px); max-width: 370px; height: 520px; } .card[data-position="active"] { transform: translateX(-50%); } .card[data-position="previous"] { transform: translateX(-53%) translateY(9px) translateZ(-80px) rotateY(3deg); opacity: 1; } .card[data-position="next"] { transform: translateX(-47%) translateY(18px) translateZ(-120px) rotateY(-3deg); opacity: 1; } .cardCopy h3 { font-size: 24px; } .cardCopy { padding-inline: 22px; } .controls { max-width: 370px; margin-top: 10px; } .art { height: 175px; } .caption { font-size: 10px; } }
+@media (prefers-reduced-motion: reduce) { .card, .cta svg { transition: none; } .cta:hover svg { transform: none; } }
+
+
+
+.cardTop > span:first-child { display: flex; align-items: center; gap: 8px; }
+.cardAction { margin-left: auto; flex-shrink: 0; }
+.cardFoot { gap: 6px; }
+.pagination { gap: 0; }
+.dot { display: grid; place-items: center; width: 32px; height: 44px; background: transparent; border: 0; }
+.dot::before { content: none; }
+.dot > span { width: 6px; height: 6px; border-radius: 50%; background: var(--line); transition: background .25s, transform .25s; }
+.dot[aria-current] > span { background: var(--brand-ink); transform: scale(1.35); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .card[data-position=active] .cardSurface:hover { box-shadow: inset 0 1px 0 var(--surface), 0 24px 42px color-mix(in srgb, var(--ink) 12%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .cardSurface { transform: none; transition: none; } .dot > span { transition: none; } }

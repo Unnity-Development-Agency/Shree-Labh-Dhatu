@@ -1,5 +1,10 @@
 import React from "react";
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaPhoneSquareAlt,
+} from "react-icons/fa";
 import Link from "next/link";
 const quickLinks = [
   {
@@ -174,6 +179,13 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <FaPhoneAlt size={16} className="shrink-0 text-gray-500" />
                 <a href="tel:+91 9810296868">+91 9810296868</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <FaPhoneSquareAlt
+                  size={16}
+                  className="shrink-0 text-gray-500"
+                />
+                <a href="tel:+91 9355293199">+91 9355293199</a>
               </li>
               <li className="flex items-center gap-3">
                 <FaEnvelope size={16} className="shrink-0 text-gray-500" />

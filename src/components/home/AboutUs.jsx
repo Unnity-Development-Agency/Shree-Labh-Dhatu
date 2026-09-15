@@ -1,262 +1,105 @@
-"use client";
+﻿"use client";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useInView } from "framer-motion";
+import Image from "next/image";
+import { ArrowLeft, ArrowRight, Pause, Play, ShieldCheck, Handshake, Layers } from "lucide-react";
+import styles from "./AboutUs.module.css";
 
-import React, { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+const values = [
+  { id: "quality", label: "Our commitment", title: "Quality, without compromise.", description: "Consistent, high-grade material for businesses that depend on it. Our commitment to quality has remained unchanged since day one.", image: "/images/home/Copper-coil.png", material: "Copper", detail: "The standard we stand by" },
+  { id: "trust", label: "Our foundation", title: "Trust, built over time.", description: "From Shree Arihant Metal Traders in 1994 to Shree Labh Dhatu today. Three decades of reliability, built one relationship at a time.", image: "/images/home/Brass-coil.png", material: "Brass", detail: "Since 1994" },
+  { id: "range", label: "Our expertise", title: "The right metal. Every time.", description: "Copper plates, brass plates, copper wires, and allied metal products. A considered range for the businesses we serve.", image: "/images/home/Aluminium-coil.png", material: "Aluminium", detail: "Expertise in every order" },
+];
 
-const EASE = [0.22, 1, 0.36, 1];
+const motionQuery = "(prefers-reduced-motion: reduce)";
+function subscribeMotion(callback) {
+  const media = window.matchMedia(motionQuery);
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
+}
+const getReducedMotion = () => window.matchMedia(motionQuery).matches;
+const getServerReducedMotion = () => true;
+const valueIcons = [ShieldCheck, Handshake, Layers];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-};
-
-const fadeUpVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
-};
-
-/**
- * Tracks whether we're at/above Tailwind's `lg` breakpoint (1024px).
- * Used to pick the correct rail-trajectory keyframes so the products
- * never drift off the diagonal line on smaller screens.
- */
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia("(min-width: 1024px)");
-    const update = () => setIsDesktop(mql.matches);
-    update();
-    mql.addEventListener("change", update);
-    return () => mql.removeEventListener("change", update);
-  }, []);
-
-  return isDesktop;
+// Keep pointer feedback separate from the outer carousel transforms.
+function tiltCard(event) {
+  if (event.pointerType !== "mouse" || window.matchMedia(motionQuery).matches) return;
+  const bounds = event.currentTarget.getBoundingClientRect();
+  event.currentTarget.style.setProperty("--tilt-x", `${-(event.clientY - bounds.top - bounds.height / 2) / bounds.height * 3}deg`);
+  event.currentTarget.style.setProperty("--tilt-y", `${(event.clientX - bounds.left - bounds.width / 2) / bounds.width * 3}deg`);
+}
+function resetTilt(event) {
+  event.currentTarget.style.setProperty("--tilt-x", "0deg");
+  event.currentTarget.style.setProperty("--tilt-y", "0deg");
 }
 
-/**
- * Rail trajectories.
- *
- * Measured against the actual illustration: the ceiling beam is a single,
- * shallow line running from near the top-left to the top-right, dropping
- * only slightly (roughly a 6% rise-over-run) — it is NOT a steep diagonal.
- * Both products ride this same beam from opposite ends, so their y/rotate
- * deltas must stay small and proportional to how far x has traveled, or
- * the product visibly drifts off the line.
- *
- * The beam slopes DOWN as it goes right, so the left product's y grows
- * (gently) positive while its x grows positive. The right product travels
- * the mirrored direction (x negative) and must rise as it moves left, so
- * its y is negative — the same magnitude as the left product's, mirrored.
- *
- * Desktop values are tuned to the full illustration width; mobile values
- * are proportionally scaled down so the product stays on-rail at smaller
- * image sizes.
- */
-const RAIL_TRAJECTORIES = {
-  desktop: {
-    left: {
-      x: [0, 60, 130, 200],
-      y: [40, 52, 58, 75],
-      rotate: [0, 1.2, 2.4, 3.5],
-      scale: [1, 1.015, 1.03, 1.05],
-    },
-    right: {
-      x: [0, -50, -80, -110],
-      y: [0, 1, 2, 3],
-      rotate: [0, -0.5, -1, -1.5],
-      scale: [1, 1.01, 1.02, 1.03],
-    },
-  },
-  mobile: {
-    left: {
-      x: [0, 34, 62, 86],
-      y: [0, 2.5, 4, 5.5],
-      rotate: [0, 0.3, 0.6, 1],
-      scale: [1, 1.008, 1.015, 1.02],
-    },
-    right: {
-      x: [0, -34, -62, -86],
-      y: [0, -2.5, -4, -5.5],
-      rotate: [0, -0.3, -0.6, -1],
-      scale: [1, 1.008, 1.015, 1.02],
-    },
-  },
-};
-
-const railTransition = {
-  duration: 9,
-  ease: "linear",
-  repeat: Infinity,
-  repeatType: "reverse",
-};
-
-const AboutUs = () => {
-  const reduceMotion = useReducedMotion();
-  const isDesktop = useIsDesktop();
-
-  const trajectorySet = isDesktop
-    ? RAIL_TRAJECTORIES.desktop
-    : RAIL_TRAJECTORIES.mobile;
-
-  const leftProductAnimation = reduceMotion
-    ? { x: 0, y: 0, rotate: 0, scale: 1 }
-    : trajectorySet.left;
-
-  const rightProductAnimation = reduceMotion
-    ? { x: 0, y: 0, rotate: 0, scale: 1 }
-    : trajectorySet.right;
-
+export default function AboutUs() {
+  const [active, setActive] = useState(0);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const root = useRef(null);
+  const touch = useRef(null);
+  const inView = useInView(root, { amount: 0.25 });
+  const reducedMotion = useSyncExternalStore(subscribeMotion, getReducedMotion, getServerReducedMotion);
+  const running = !reducedMotion && !hovered && !focused && !paused && !hidden && inView;
+  const move = (direction) => setActive((current) => (current + direction + values.length) % values.length);
+  useEffect(() => {
+    const update = () => setHidden(document.hidden);
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+  useEffect(() => {
+    if (!running) return;
+    const timer = setInterval(() => setActive((current) => (current + 1) % values.length), 5500);
+    return () => clearInterval(timer);
+  }, [running, active]);
   return (
-    <section id="about" className="w-full bg-[var(--surface)] px-6 py-20 sm:py-24 overflow-hidden">
-      <div className=" relative mx-auto w-full max-w-7xl">
-        {/* Centered eyebrow + heading — same treatment as WhyChooseUS */}
-        <motion.div
-          initial={reduceMotion ? false : "hidden"}
-          whileInView={reduceMotion ? undefined : "visible"}
-          viewport={{ once: false, amount: 0.6 }}
-          variants={reduceMotion ? undefined : containerVariants}
-          className="flex w-full flex-col items-center text-center"
-        >
-          <motion.div
-            variants={reduceMotion ? undefined : fadeUpVariants}
-            className="flex w-full max-w-xs items-center justify-center"
-          >
-            <span className="h-0.5 w-full max-w-20 rounded-full bg-[var(--brand)]" />
-            <p className="mx-4 w-full whitespace-nowrap text-sm font-bold uppercase tracking-[0.2em] text-[var(--brand-ink)]">
-              About Us
-            </p>
-            <span className="h-0.5 w-full max-w-20 rounded-full bg-[var(--brand)]" />
-          </motion.div>
-
-          <motion.h2
-            variants={reduceMotion ? undefined : fadeUpVariants}
-            className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl"
-          >
-            Shree Labh Dhatu Traders Pvt. Ltd.
-          </motion.h2>
-        </motion.div>
-        {/* Photo collage (left) + copy (right) — reversed from before, new photo treatment */}
-        <div className="mt-14 grid w-full grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-20">
-          {/* Left column */}
-          <div>
-            <div className="relative">
-              <img
-                src="/images/home/BackBg.png"
-                alt="About Us"
-                className="w-full"
-              />
-              {/* top lines.. */}
-              <div className="absolute top-0 left-5">
-                <img
-                  src="/images/home/lines.png"
-                  alt="About Us"
-                  className="w-full"
-                />
-              </div>
-              <div className="absolute -bottom-22 z-10">
-                <img
-                  src="/images/home/FrontBg.png"
-                  alt="About Us"
-                  className="w-full"
-                />
-              </div>
-
-              {/* Left product — travels left → right along the rail.
-                  Positioned with % top/left (not rem/px) so it scales
-                  proportionally with the illustration at every breakpoint. */}
-              <div className="hidden  sm:block absolute top-[18%] left-[10%] h-24 w-24 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
-                <motion.img
-                  src="/images/home/left_prod.png"
-                  alt="About Us"
-                  className="h-full w-full object-contain"
-                  style={{ willChange: "transform" }}
-                  animate={leftProductAnimation}
-                  transition={reduceMotion ? undefined : railTransition}
-                />
-              </div>
-
-              {/* Right product — travels right → left along the opposite rail. */}
-              <div className="absolute top-[10%] right-[8%] h-24 w-24 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
-                <motion.img
-                  src="/images/home/right_prod.png"
-                  alt="About Us"
-                  className="h-full w-full object-contain"
-                  style={{ willChange: "transform" }}
-                  animate={rightProductAnimation}
-                  transition={reduceMotion ? undefined : railTransition}
-                />
-              </div>
+    <section id="about" ref={root} className={styles.section} aria-labelledby="story-heading">
+      <div className={styles.inner}>
+        <div className={styles.copy}>
+          <p className={styles.eyebrow}><span /> OUR STORY</p>
+          <p className={styles.since}>EST. 1994 <span>30+ years of trust</span></p>
+          <h2 id="story-heading">Trusted traders.<br /><em>Trusted quality.</em></h2>
+          <p className={styles.company}>Shree Labh Dhatu Traders Pvt. Ltd.</p>
+          <p className={styles.lead}>For over three decades, we have been a name synonymous with reliability and quality in the non-ferrous metal trading industry.</p>
+          <p>Our journey began in 1994 as Shree Arihant Metal Traders, and in 2021, we evolved into Shree Labh Dhatu Traders Pvt. Ltd. — a transformation that reflects our growth, but not our core values. What has remained unchanged since day one is our unwavering commitment to quality.</p>
+          <p>We specialize in copper plates, brass plates, copper wires, and a range of allied metal products, serving businesses that depend on consistent, high-grade material for their operations.</p>
+          <blockquote>“Trust is earned, plate by plate, order by order.”<span>The principle we continue to build on today.</span></blockquote>
+          <a href="#materials" className={`site-button ${styles.cta}`}>Explore our materials <ArrowRight size={17} aria-hidden="true" /></a>
+        </div>
+        <div className={styles.carousel} role="region" aria-roledescription="carousel" aria-label="Our values"
+          onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+          onFocusCapture={() => setFocused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
+          onKeyDown={(event) => { if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}>
+          <div className={styles.stage} onTouchStart={(event) => { touch.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }}
+            onTouchCancel={() => { touch.current = null; }}
+            onTouchEnd={(event) => { if (!touch.current) return; const dx = event.changedTouches[0].clientX - touch.current.x; const dy = event.changedTouches[0].clientY - touch.current.y; if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) move(dx < 0 ? 1 : -1); touch.current = null; }}>
+            {values.map((value, index) => {
+              const offset = (index - active + values.length) % values.length;
+              const Icon = valueIcons[index];
+              return <article key={value.id} className={styles.card} data-position={offset === 0 ? "active" : offset === 1 ? "next" : "previous"} aria-hidden={index !== active} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${values.length}: ${value.title}`}>
+                <div className={styles.cardSurface} onPointerMove={index === active ? tiltCard : undefined} onPointerLeave={resetTilt}>
+                <div className={styles.cardTop}><span><Icon size={17} aria-hidden="true" />{value.label}</span><span>0{index + 1}</span></div>
+                <div className={styles.art}><span className={styles.material}>{value.material}</span><Image src={value.image} alt="" width={360} height={260} sizes="(max-width: 640px) 75vw, 330px" /></div>
+                <div className={styles.cardCopy}><h3>{value.title}</h3><p>{value.description}</p><div className={styles.cardFoot}><span />{value.detail}<a href="/contact" className={`site-button site-button--outline site-icon-button ${styles.cardAction}`} tabIndex={index === active ? 0 : -1} aria-label={`Discuss ${value.material.toLowerCase()} requirements`}><ArrowRight size={16} aria-hidden="true" /></a></div></div>
+                </div>
+              </article>;
+            })}
+          </div>
+          <div className={styles.controls}>
+            <div className={styles.pagination} aria-label="Choose a value">{values.map((value, index) => <button key={value.id} className={styles.dot} aria-label={`Show value ${index + 1}: ${value.title}`} aria-current={active === index ? "true" : undefined} onClick={() => setActive(index)}><span /></button>)}</div>
+            <div className={styles.buttons}>
+              <button className="site-button site-button--outline site-icon-button" onClick={() => move(-1)} aria-label="Previous value"><ArrowLeft size={18} /></button>
+              {!reducedMotion && <button className="site-button site-button--outline site-icon-button" onClick={() => setPaused(!paused)} aria-label={paused ? "Start automatic rotation" : "Pause automatic rotation"}>{paused ? <Play size={15} /> : <Pause size={15} />}</button>}
+              <button className="site-button site-button--outline site-icon-button" onClick={() => move(1)} aria-label="Next value"><ArrowRight size={18} /></button>
             </div>
           </div>
-
-          {/* Right column — company copy */}
-          <motion.div
-            initial={reduceMotion ? false : "hidden"}
-            whileInView={reduceMotion ? undefined : "visible"}
-            viewport={{ once: false, amount: 0.3 }}
-            variants={reduceMotion ? undefined : containerVariants}
-          >
-            {/* "Since 1994" badge — small UI accent, not a bullet list */}
-            <motion.div
-              variants={reduceMotion ? undefined : fadeUpVariants}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--brand)]/20 bg-[var(--brand)]/5 px-4 py-1.5"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand)]" />
-              <span className="text-xs font-bold uppercase tracking-[0.15em] text-[var(--brand-ink)]">
-                Since 1994 · 30+ Years of Trust
-              </span>
-            </motion.div>
-
-            <motion.h3
-              variants={reduceMotion ? undefined : fadeUpVariants}
-              className="mt-5 text-2xl font-bold tracking-tight text-[var(--ink)] sm:text-3xl"
-            >
-              Trusted Traders. Trusted Quality.
-            </motion.h3>
-
-            <motion.p
-              variants={reduceMotion ? undefined : fadeUpVariants}
-              className="mt-6 text-base font-medium leading-relaxed text-zinc-800 sm:text-lg"
-            >
-              For over three decades, we have been a name synonymous with
-              reliability and quality in the non-ferrous metal trading industry.
-            </motion.p>
-
-            <motion.p
-              variants={reduceMotion ? undefined : fadeUpVariants}
-              className="mt-5 text-sm leading-relaxed text-[var(--muted)] sm:text-base"
-            >
-              Our journey began in 1994 as Shree Arihant Metal Traders, and in
-              2021, we evolved into Shree Labh Dhatu Traders Pvt. Ltd. — a
-              transformation that reflects our growth, but not our core values.
-              What has remained unchanged since day one is our unwavering
-              commitment to quality.
-            </motion.p>
-
-            <motion.p
-              variants={reduceMotion ? undefined : fadeUpVariants}
-              className="mt-5 text-sm leading-relaxed text-[var(--muted)] sm:text-base"
-            >
-              We specialize in copper plates, brass plates, copper wires, and a
-              range of allied metal products, serving businesses that depend on
-              consistent, high-grade material for their operations.
-            </motion.p>
-
-            <motion.p
-              variants={reduceMotion ? undefined : fadeUpVariants} 
-              className="mt-8 border-l-2 border-[var(--brand)] pl-5 font-serif text-lg italic leading-snug text-[var(--brand-ink)]"
-            >
-              Trust is earned, plate by plate, order by order — that's the
-              principle we continue to build on today.
-            </motion.p>
-          </motion.div>
+          <p className={styles.caption}>Rooted in experience. Guided by our values.</p>
+          <span className={styles.srOnly} aria-live={running ? "off" : "polite"} aria-atomic="true">{values[active].title} {active + 1} of {values.length}</span>
         </div>
       </div>
     </section>
   );
-};
-
-export default AboutUs;
+}
