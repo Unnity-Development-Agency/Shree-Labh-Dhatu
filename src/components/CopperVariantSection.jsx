@@ -31,6 +31,7 @@ export default function CopperVariantSection({
   const reduceMotion = useReducedMotion();
   const isReversed = index % 2 === 1;
   const [openPanel, setOpenPanel] = React.useState("features");
+  const [openPanel2, setOpenPanel2] = React.useState("applications");
 
   return (
     <section
@@ -99,32 +100,37 @@ export default function CopperVariantSection({
         {/* ---------- Key Features ---------- */}
         <motion.section
           variants={reduceMotion ? undefined : fadeUpVariants}
-          className="mt-8 border-t border-zinc-200 pt-6"
+          className="mt-8 overflow-hidden rounded-sm border border-zinc-200 bg-white p-5 sm:p-6"
         >
           <button
             type="button"
             onClick={() =>
-              setOpenPanel(openPanel === "features" ? "" : "features")
+              setOpenPanel((current) =>
+                current === "features" ? "" : "features",
+              )
             }
             aria-expanded={openPanel === "features"}
-            className="flex w-full items-center justify-between text-left"
+            className="flex w-full items-center justify-between text-left no-splash rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E53935]"
           >
-            <span className="flex items-center gap-3 text-sm font-bold uppercase tracking-wide text-zinc-700">
-              <span className="text-xs text-[#E53935]">01</span> Key Features
+            <span className="flex items-center gap-3 text-base font-bold tracking-wide text-zinc-800">
+              <span className="flex h-8 w-8 items-center justify-center rounded-xs bg-[#fff1ef] text-xs font-bold text-[#b72c29]">
+                01
+              </span>{" "}
+              Key Features
             </span>
             <ChevronDown
               className={`h-4 w-4 text-zinc-400 transition-transform duration-300 ${openPanel === "features" ? "rotate-180" : ""}`}
             />
           </button>
           {openPanel === "features" && (
-            <div className="mt-3 overflow-hidden border border-zinc-200">
-              <div className="grid grid-cols-2 gap-px bg-zinc-200 sm:grid-cols-3 lg:grid-cols-6">
+            <div className="mt-4 border-t border-zinc-100 pt-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {product.features.map((feature) => (
                   <div
                     key={feature}
-                    className="bg-white px-2 py-3 text-center transition-colors duration-300 hover:bg-[#fff8f7] sm:px-3"
+                    className="rounded-sm border border-zinc-200/70 bg-[#f8f7f4] px-4 py-3 text-left"
                   >
-                    <span className="text-xs font-semibold leading-snug text-zinc-600 sm:text-sm">
+                    <span className="text-sm font-medium leading-relaxed text-zinc-700">
                       {feature}
                     </span>
                   </div>
@@ -137,36 +143,38 @@ export default function CopperVariantSection({
         {/* ---------- Applications ---------- */}
         <motion.section
           variants={reduceMotion ? undefined : fadeUpVariants}
-          className="mt-7"
+          className="mt-4 overflow-hidden rounded-sm border border-zinc-200 bg-white p-5 sm:p-6"
         >
           <button
             type="button"
             onClick={() =>
-              setOpenPanel(openPanel === "applications" ? "" : "applications")
+              setOpenPanel2((current) =>
+                current === "applications" ? "" : "applications",
+              )
             }
-            aria-expanded={openPanel === "applications"}
-            className="flex w-full items-center justify-between border-t border-zinc-200 pt-6 text-left"
+            aria-expanded={openPanel2 === "applications"}
+            className="flex w-full items-center justify-between text-left no-splash rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E53935]"
           >
-            <span className="flex items-center gap-3 text-sm font-bold uppercase tracking-wide text-zinc-700">
-              <span className="text-xs text-[#E53935]">02</span> Applications
+            <span className="flex items-center gap-3 text-base font-bold tracking-wide text-zinc-800">
+              <span className="flex h-8 w-8 items-center justify-center rounded-xs bg-[#fff1ef] text-xs font-bold text-[#b72c29]">
+                02
+              </span>{" "}
+              Applications
             </span>
             <ChevronDown
-              className={`h-4 w-4 text-zinc-400 transition-transform duration-300 ${openPanel === "applications" ? "rotate-180" : ""}`}
+              className={`h-4 w-4 text-zinc-400 transition-transform duration-300 ${openPanel2 === "applications" ? "rotate-180" : ""}`}
             />
           </button>
-          {openPanel === "applications" && (
-            <div className="mt-3 overflow-hidden border border-zinc-200">
-              <div className="grid grid-cols-2 gap-px bg-zinc-200 sm:grid-cols-4">
+          {openPanel2 === "applications" && (
+            <div className="mt-4 border-t border-zinc-100 pt-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {product.applications.map((app) => (
                   <div
                     key={app.title}
-                    className="bg-white px-2 py-3 text-center transition-colors duration-300 hover:bg-[#fff8f7] sm:px-3"
+                    className="rounded-sm border border-zinc-200/70 bg-[#f8f7f4] px-4 py-3 text-left"
                   >
-                    <span className="block text-xs font-bold uppercase tracking-wide text-zinc-600">
+                    <span className="block text-sm font-medium leading-relaxed text-zinc-700">
                       {app.title}
-                    </span>
-                    <span className="mt-1 block text-[11px] leading-snug text-zinc-500">
-                      {app.description}
                     </span>
                   </div>
                 ))}
@@ -190,15 +198,15 @@ export default function CopperVariantSection({
             aria-expanded={openPanel === "specifications"}
             className="flex w-full items-center justify-between border-t border-zinc-200 pt-6 text-left"
           >
-            <span className="flex items-center gap-3 text-sm font-bold uppercase tracking-wide text-zinc-700">
-              <span className="text-xs text-[#E53935]">03</span> Specifications
+            <span className="flex items-center gap-3 text-base font-bold tracking-wide text-zinc-800">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#fff1ef] text-xs font-bold text-[#b72c29]">03</span> Specifications
             </span>
             <ChevronDown
               className={`h-4 w-4 text-zinc-400 transition-transform duration-300 ${openPanel === "specifications" ? "rotate-180" : ""}`}
             />
           </button>
           {openPanel === "specifications" && (
-            <div className="mt-3 overflow-hidden border border-zinc-200">
+            <div className="mt-4 border-t border-zinc-100 pt-4">
               <dl className="grid grid-cols-2 gap-px bg-zinc-200 sm:grid-cols-3 lg:grid-cols-6">
                 {product.specifications.map((spec) => (
                   <div

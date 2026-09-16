@@ -142,34 +142,59 @@ body {
   pointer-events: none;
   border-radius: inherit;
   background:
-    radial-gradient(ellipse var(--splash-radius) calc(var(--splash-radius) * 1.8) at 18% 68%, var(--brand) 98%, transparent 100%),
-    radial-gradient(ellipse calc(var(--splash-radius) * .75) var(--splash-radius) at 53% 24%, var(--brand) 98%, transparent 100%),
-    radial-gradient(ellipse calc(var(--splash-radius) * .6) calc(var(--splash-radius) * 1.3) at 83% 72%, var(--brand) 98%, transparent 100%),
-    radial-gradient(ellipse calc(var(--splash-radius) * .35) calc(var(--splash-radius) * .8) at 36% 88%, var(--brand) 98%, transparent 100%);
-  transition: --splash-radius 650ms cubic-bezier(.22, .65, .3, 1);
+    radial-gradient(
+      ellipse var(--splash-radius) calc(var(--splash-radius) * 1.8) at 18% 68%,
+      var(--brand) 98%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse calc(var(--splash-radius) * 0.75) var(--splash-radius) at 53% 24%,
+      var(--brand) 98%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse calc(var(--splash-radius) * 0.6) calc(var(--splash-radius) * 1.3)
+        at 83% 72%,
+      var(--brand) 98%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse calc(var(--splash-radius) * 0.35) calc(var(--splash-radius) * 0.8)
+        at 36% 88%,
+      var(--brand) 98%,
+      transparent 100%
+    );
+  transition: --splash-radius 650ms cubic-bezier(0.22, 0.65, 0.3, 1);
 }
 
 @media (hover: hover) {
-  :is(button, .site-button, .button-splash):not(:disabled):not([aria-disabled="true"]):hover::before {
+  :is(button, .site-button, .button-splash):not(.no-splash):not(
+      [aria-disabled="true"]
+    ):hover::before {
     --splash-radius: 150%;
   }
-  :is(button, .site-button, .button-splash):not(:disabled):not([aria-disabled="true"]):hover {
+  :is(button, .site-button, .button-splash):not(.no-splash):not(:disabled):not(
+      [aria-disabled="true"]
+    ):hover {
     color: var(--on-brand) !important;
   }
-  :is(button, .site-button, .button-splash):not(:disabled):hover :is(span, svg) {
+  :is(button, .site-button, .button-splash):not(.no-splash):not(:disabled):hover
+    :is(span, svg) {
     color: inherit;
   }
 }
 
-:is(button, .site-button, .button-splash):not(:disabled):focus-visible::before {
+:is(button, .site-button, .button-splash):not(.no-splash):not(:disabled):focus-visible::before {
   --splash-radius: 150%;
 }
-:is(button, .site-button, .button-splash):not(:disabled):focus-visible {
+:is(button, .site-button, .button-splash):not(.no-splash):not(:disabled):focus-visible {
   color: var(--on-brand) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :is(button, .site-button, .button-splash)::before { transition: none; }
+  :is(button, .site-button, .button-splash)::before {
+    transition: none;
+  }
 }
 
 button:not(:disabled),

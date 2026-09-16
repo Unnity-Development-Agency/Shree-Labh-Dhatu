@@ -1,13 +1,3 @@
-/**
- * All content for every Copper variant lives here. Add, remove, or edit a
- * variant by editing this array only — CopperProductsPage.jsx and
- * CopperVariantSection.jsx never need to change.
- *
- * `features` and `applications` are plain strings/objects (JSON-safe) —
- * the components decorate them with icons from a small rotating set,
- * rather than storing icon references here, since icon components can't
- * be serialized into data.
- */
 const copperProducts = [
   {
     id: "copper-sheet",
@@ -28,20 +18,22 @@ const copperProducts = [
     ],
     applications: [
       {
-        title: "Electrical",
-        description: "Busbars, switchgear, and grounding components.",
+        title: "Busbars & panels",
       },
       {
-        title: "HVAC",
-        description: "Heat exchangers, radiators, and cooling systems.",
+        title: "Transformer cores",
       },
       {
-        title: "Construction",
-        description: "Roofing, flashing, and architectural cladding.",
+        title: "Heat exchangers",
       },
       {
-        title: "Industrial Equipment",
-        description: "Panels, enclosures, and machine parts.",
+        title: "Roofing & cladding",
+      },
+      {
+        title: "Roofing & cladding",
+      },
+      {
+        title: "Gaskets & seals",
       },
     ],
     specifications: [
@@ -72,20 +64,22 @@ const copperProducts = [
     ],
     applications: [
       {
-        title: "Manufacturing",
-        description: "Automated stamping and roll-forming lines.",
+        title: "Progressive-die stamping",
       },
       {
-        title: "Electrical",
-        description: "Transformer windings and coil stock.",
+        title: "Roll-formed parts",
       },
       {
-        title: "Automotive",
-        description: "Terminals, connectors, and radiator components.",
+        title: "HVAC tubing",
       },
       {
-        title: "Power Transmission",
-        description: "Continuous conductor fabrication.",
+        title: "Automotive terminals",
+      },
+      {
+        title: "Motor windings",
+      },
+      {
+        title: "Slitting stock",
       },
     ],
     specifications: [
@@ -116,17 +110,20 @@ const copperProducts = [
     ],
     applications: [
       {
-        title: "Electrical",
-        description: "Contacts, connectors, and terminals.",
+        title: "Electrical contacts",
       },
-      { title: "Electronics", description: "PCB components and lead frames." },
+      { title: "Busbar links" },
       {
-        title: "Industrial Equipment",
-        description: "Busbar links and jumpers.",
+        title: "Battery tabs",
       },
       {
-        title: "Manufacturing",
-        description: "Fine stamping and precision parts.",
+        title: "Lead frames",
+      },
+      {
+        title: "Inductor windings",
+      },
+      {
+        title: "Spring contacts",
       },
     ],
     specifications: [
@@ -157,17 +154,20 @@ const copperProducts = [
     ],
     applications: [
       {
-        title: "Electronics",
-        description: "Flexible circuits and fine-pitch connectors.",
+        title: "Fine-pitch connectors",
       },
       {
-        title: "Miniaturized Components",
-        description: "Compact electronic assemblies.",
+        title: "Flexible circuits",
       },
-      { title: "Precision Manufacturing", description: "Micro-stamped parts." },
+      { title: "Micro components" },
       {
-        title: "Electrical",
-        description: "High-density conductor applications.",
+        title: "Semiconductor lead frames",
+      },
+      {
+        title: "Sensor contacts",
+      },
+      {
+        title: "Wearable interconnects",
       },
     ],
     specifications: [
@@ -197,18 +197,23 @@ const copperProducts = [
       "Transparent Grading Process",
     ],
     applications: [
-      { title: "Smelting", description: "Input material for copper refining." },
       {
-        title: "Manufacturing",
-        description: "Recycled feedstock for new copper products.",
+        title: "Smelting & refining",
       },
       {
-        title: "Industrial Recycling",
-        description: "Bulk material recovery programs.",
+        title: "Alloy production",
       },
       {
-        title: "Sustainability Initiatives",
-        description: "Reduced-impact copper sourcing.",
+        title: "Casting billets",
+      },
+      {
+        title: "Foundry feedstock",
+      },
+      {
+        title: "Copper sulphate",
+      },
+      {
+        title: "Sustainable sourcing",
       },
     ],
     specifications: [
@@ -239,17 +244,20 @@ const copperProducts = [
     ],
     applications: [
       {
-        title: "Power Transmission",
-        description: "Domestic and industrial wiring.",
+        title: "Power cabling",
       },
       {
-        title: "Electrical",
-        description: "Panel wiring and control circuits.",
+        title: "Building wiring",
       },
-      { title: "Automotive", description: "Harness and connector wiring." },
+      { title: "Motor windings" },
       {
-        title: "Industrial Equipment",
-        description: "Motor and machine wiring.",
+        title: "Data transmission",
+      },
+      {
+        title: "Wiring harnesses",
+      },
+      {
+        title: "Grounding systems",
       },
     ],
     specifications: [
@@ -280,17 +288,22 @@ const copperProducts = [
     ],
     applications: [
       {
-        title: "Power Transmission",
-        description: "Domestic and industrial wiring.",
+        title: "Wire drawing",
       },
       {
-        title: "Electrical",
-        description: "Panel wiring and control circuits.",
+        title: "Earthing electrodes",
       },
-      { title: "Automotive", description: "Harness and connector wiring." },
       {
-        title: "Industrial Equipment",
-        description: "Motor and machine wiring.",
+        title: "Switchgear fabrication",
+      },
+      {
+        title: "Welding tips",
+      },
+      {
+        title: "Machined fittings",
+      },
+      {
+        title: "Conductor hardware",
       },
     ],
     specifications: [
