@@ -1,12 +1,19 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Component, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight, Pause, Play, RotateCcw } from "lucide-react";
 import styles from "./Hero.module.css";
 
 const MetalScene = dynamic(() => import("./HomeMetalScene"), { ssr: false });
+
+class SceneBoundary extends Component {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { this.props.onStatus("unavailable"); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
 const metals = [
   {
     name: "Copper",
@@ -45,9 +52,39 @@ export default function Hero() {
   const [paused, setPaused] = useState(false);
   const [resetKey, setResetKey] = useState(0);
   const [sceneStatus, setSceneStatus] = useState("loading");
+  const [revealed, setRevealed] = useState(false);
   const metal = metals[selected];
 
+  useEffect(() => {
+    if (sceneStatus === "loading") return;
+    let active = true;
+    // Reveal the completed frame with its final font metrics, not the fallback.
+    Promise.resolve(document.fonts?.ready).then(() => {
+      if (active) setRevealed(true);
+    });
+    return () => { active = false; };
+  }, [sceneStatus]);
+
+  useEffect(() => {
+    if (revealed) return;
+    const timeout = window.setTimeout(() => {
+      setSceneStatus((status) => status === "loading" ? "unavailable" : status);
+      setRevealed(true);
+    }, 12000);
+    return () => window.clearTimeout(timeout);
+  }, [revealed]);
+
   return (
+    <>
+    {!revealed && (
+      <div className={styles.loader} data-home-loader role="status" aria-live="polite">
+        <div className={styles.loaderMark} aria-hidden="true"><span /><span /><span /></div>
+        <span className={styles.loaderBrand}>Shree Labh Dhatu</span>
+        <span className={styles.loaderCaption}>Preparing your metal showroom</span>
+        <span className={styles.loaderTrack} aria-hidden="true"><span /></span>
+      </div>
+    )}
+    <noscript><style>{`[data-home-loader]{display:none!important}html:has([data-home-loader]){overflow:auto!important}.home-page:has(>[data-home-loader])>*{visibility:visible!important}`}</style></noscript>
     <section
       ref={surfaceRef}
       className={styles.hero}
@@ -57,6 +94,7 @@ export default function Hero() {
     >
       <div className={styles.backdrop} aria-hidden="true" />
       <div className={styles.scene} aria-hidden="true">
+        <SceneBoundary onStatus={setSceneStatus}>
         <MetalScene
           surfaceRef={surfaceRef}
           selected={selected}
@@ -65,6 +103,7 @@ export default function Hero() {
           resetKey={resetKey}
           onStatus={setSceneStatus}
         />
+        </SceneBoundary>
       </div>
       <div className={styles.shade} aria-hidden="true" />
       <div className={styles.topline}>
@@ -83,7 +122,7 @@ export default function Hero() {
           supplier <em>across&apos;India</em>
         </h1>
         <p className={styles.description}>
-          India's trusted supplier of high-conductivity electrical wires,
+          India&apos;s trusted supplier of high-conductivity electrical wires,
           corrosion-resistant brass plates, and custom-engineered non-ferrous
           metal components.
         </p>
@@ -111,13 +150,13 @@ export default function Hero() {
         </div>
       </div>
       <div className={styles.stage} data-metal-stage aria-hidden="true">
-        {sceneStatus !== "ready" && (
+        {sceneStatus === "unavailable" && (
           <div className={styles.fallback}>
             <img src="/images/home/Copper-coil.png" alt="" />
           </div>
         )}
       </div>
-      <div className={styles.tools}>
+      <div className={styles.tools} data-metal-tools>
         <span className={styles.interactionHint}>
           {sceneStatus === "ready"
             ? "Move to illuminate · Drag to turn"
@@ -185,5 +224,6 @@ export default function Hero() {
         METAL / IN CONTINUOUS FORM
       </span>
     </section>
+    </>
   );
 }
