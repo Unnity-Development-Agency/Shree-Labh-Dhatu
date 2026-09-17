@@ -96,7 +96,7 @@ export default function ContactPage() {
       formData.append("product", form.product);
       formData.append("message", form.message.trim());
       await fetch(
-        "https://script.google.com/macros/s/AKfycbyZUsr6K9ljV9wgpAT_7Jt-NCED2OQApefqHVPgZWi9vKP9IdQJHIsTb44sAowXx18N/exec",
+        "https://script.google.com/macros/s/AKfycbxkz07PjExtJ3tNjul0EgpBsB-akeQiXHZOXgW3LiQ3ctlbAve4xYcv1PbB3Mp6eGm4/exec",
         {
           method: "POST",
           body: formData,
