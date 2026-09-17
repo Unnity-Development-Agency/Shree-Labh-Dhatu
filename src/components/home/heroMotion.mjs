@@ -1,7 +1,7 @@
 const TAU = Math.PI * 2;
 
 export function wrapAngle(angle) {
-  return ((angle + Math.PI) % TAU + TAU) % TAU - Math.PI;
+  return ((((angle + Math.PI) % TAU) + TAU) % TAU) - Math.PI;
 }
 
 export function frameDelta(time, previousTime) {

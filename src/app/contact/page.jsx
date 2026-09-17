@@ -88,10 +88,20 @@ export default function ContactPage() {
     setStatus("submitting");
 
     try {
-      /* -----------------------------------------------------------------
-         TODO: Replace Script With  Client Email/ GSHEET.
-         ----------------------------------------------------------------- */
-
+      const formData = new URLSearchParams();
+      formData.append("fullName", form.fullName.trim());
+      formData.append("companyName", form.companyName.trim());
+      formData.append("phone", form.phone.trim());
+      formData.append("email", form.email.trim());
+      formData.append("product", form.product);
+      formData.append("message", form.message.trim());
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbyZUsr6K9ljV9wgpAT_7Jt-NCED2OQApefqHVPgZWi9vKP9IdQJHIsTb44sAowXx18N/exec",
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
       setStatus("success");
       setForm(initialFormState);
     } catch (err) {
@@ -316,7 +326,8 @@ export default function ContactPage() {
 
               {status === "success" && (
                 <p className="text-center text-sm font-medium text-emerald-600">
-                  Thank you — your enquiry has been sent.
+                  Thank you — your enquiry has been sent. Our team will get back
+                  to you shortly.
                 </p>
               )}
               {status === "error" && (
