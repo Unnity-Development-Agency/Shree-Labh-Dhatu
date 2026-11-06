@@ -4,6 +4,7 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
   FaPhoneSquareAlt,
+  FaWhatsapp,
 } from "react-icons/fa";
 import Link from "next/link";
 const quickLinks = [
@@ -102,7 +103,7 @@ export default function Footer() {
                 aria-label="WhatsApp"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-500/60 text-xs font-semibold text-gray-300 transition-colors hover:border-red-500 hover:text-red-500"
               >
-                WA
+                <FaWhatsapp size={20} aria-hidden="true" />
               </Link>
             </div>
           </div>
